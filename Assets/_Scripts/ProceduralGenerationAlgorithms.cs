@@ -18,11 +18,27 @@ public class ProceduralGenerationAlgorithms : MonoBehaviour
 
         return path;
     }
+
+    public static List<Vector2Int> RandomWalkCorridor(Vector2Int startPosition, int corridorLength)
+    {
+        List <Vector2Int> corridor = new List<Vector2Int>();
+        var direction = Direction2D.GetRandomCardinalDirection();
+        var currentPosition = startPosition;-.
+        corridor.Add(currentPosition);
+        
+        for (int i = 0; i < corridorLength; i++)
+        {
+            currentPosition += direction;
+            corridor.Add(currentPosition);
+        }
+
+        return corridor;
+    }
 }
 
 public static class Direction2D
 {
-    private static readonly List<Vector2Int> CardinalDirectionList = new()
+    public static readonly List<Vector2Int> CardinalDirectionList = new()
     {
         new Vector2Int(0, 1), //UP
         new Vector2Int(1, 0), //RIGHT
@@ -32,6 +48,6 @@ public static class Direction2D
 
     public static Vector2Int GetRandomCardinalDirection()
     {
-        return CardinalDirectionList[Random.Range(0, 4)];
+        return CardinalDirectionList[Random.Range(0, 4)]; // 0-4 -- up,right,left,down
     }
 }
