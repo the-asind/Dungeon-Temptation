@@ -23,7 +23,7 @@ public class ProceduralGenerationAlgorithms : MonoBehaviour
     {
         List <Vector2Int> corridor = new List<Vector2Int>();
         var direction = Direction2D.GetRandomCardinalDirection();
-        var currentPosition = startPosition;-.
+        var currentPosition = startPosition;
         corridor.Add(currentPosition);
         
         for (int i = 0; i < corridorLength; i++)
