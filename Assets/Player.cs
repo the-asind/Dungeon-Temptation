@@ -32,6 +32,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (Time.time < nextWalkTime) return;
         // Player rotation
         if (moveDelta.x > 0)
             transform.localScale = Vector3.one;
