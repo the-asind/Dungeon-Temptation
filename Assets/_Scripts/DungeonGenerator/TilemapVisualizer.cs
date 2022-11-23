@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class TilemapVisualizer : MonoBehaviour
 {
-    [SerializeField] private Tilemap floorTilemap, wallTilemap;
+    [SerializeField] private Tilemap floorTilemap, wallTilemap, objectTilemap;
 
     [SerializeField] private TileBase floorTile, wallTop, wallSideRight;
 
@@ -19,6 +19,8 @@ public class TilemapVisualizer : MonoBehaviour
         wallDiagonalCornerUpRight,
         wallDiagonalCornerUpLeft;
 
+    [SerializeField] private TileBase chests;
+    
     public void SetFloorTiles(HashSet<Vector2Int> floorPositions)
     {
         SetTiles(floorPositions, floorTilemap, floorTile);
