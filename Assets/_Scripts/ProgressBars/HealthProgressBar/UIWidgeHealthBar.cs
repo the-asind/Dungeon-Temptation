@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class UIWidgetProgressBar : MonoBehaviour
+public class UIWidgetHealthProgressBar : MonoBehaviour
 {
-    [SerializeField] private ProgressBar progressBar;
+    [SerializeField] private HealthProgressBar progressBar;
 
 }
