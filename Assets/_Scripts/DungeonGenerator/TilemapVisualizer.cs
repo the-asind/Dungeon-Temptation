@@ -59,6 +59,7 @@ public class TilemapVisualizer : MonoBehaviour
     {
         floorTilemap.ClearAllTiles();
         wallTilemap.ClearAllTiles();
+        objectTilemap.ClearAllTiles();
     }
 
     internal void SetSingleCornerWall(Vector2Int position, string binaryType)
