@@ -8,12 +8,9 @@ public class CorridorFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField] private int corridorLength = 14, corridorCount = 5;
     [SerializeField] [Range(0.1f, 1)] private float roomPercent = 0.8f;
 
-    protected override void RunProceduralGeneration()
-    {
-        CorridorFirstGeneration();
-    }
+    protected override void RunProceduralGeneration() => CorridorFirstGeneration();
 
-    private void CorridorFirstGeneration()
+        private void CorridorFirstGeneration()
     {
         HashSet<Vector2Int> floorPositions = new();
         HashSet<Vector2Int> potentialRoomPositions = new();

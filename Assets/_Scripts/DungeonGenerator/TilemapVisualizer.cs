@@ -35,17 +35,17 @@ public class TilemapVisualizer : MonoBehaviour
     {
         var typeAsByte = Convert.ToByte(binaryType, 2);
         TileBase tile = null;
-        if (WallTypesHelper.WallTop.Contains(typeAsByte))
+        if (WallHashType.WallTop.Contains(typeAsByte))
             tile = wallTop;
-        else if (WallTypesHelper.WallSideRight.Contains(typeAsByte))
+        else if (WallHashType.WallSideRight.Contains(typeAsByte))
             tile = wallSideRight;
-        else if (WallTypesHelper.WallSideLeft.Contains(typeAsByte))
+        else if (WallHashType.WallSideLeft.Contains(typeAsByte))
             tile = wallSideLeft;
-        else if (WallTypesHelper.WallBottom.Contains(typeAsByte))
+        else if (WallHashType.WallBottom.Contains(typeAsByte))
             tile = wallBottom;
-        else if (WallTypesHelper.WallFull.Contains(typeAsByte)) tile = wallFull;
+        else if (WallHashType.WallFull.Contains(typeAsByte)) tile = wallFull;
 
-        if (tile != null)
+        if (tile)
             SetSingleTile(wallTilemap, tile, position);
     }
 
@@ -67,23 +67,23 @@ public class TilemapVisualizer : MonoBehaviour
         var typeAsByte = Convert.ToByte(binaryType, 2);
         TileBase tile = null;
 
-        if (WallTypesHelper.WallInnerCornerDownLeft.Contains(typeAsByte))
+        if (WallHashType.WallInnerCornerDownLeft.Contains(typeAsByte))
             tile = wallInnerCornerDownLeft;
-        else if (WallTypesHelper.WallInnerCornerDownRight.Contains(typeAsByte))
+        else if (WallHashType.WallInnerCornerDownRight.Contains(typeAsByte))
             tile = wallInnerCornerDownRight;
-        else if (WallTypesHelper.WallDiagonalCornerDownLeft.Contains(typeAsByte))
+        else if (WallHashType.WallDiagonalCornerDownLeft.Contains(typeAsByte))
             tile = wallDiagonalCornerDownLeft;
-        else if (WallTypesHelper.WallDiagonalCornerDownRight.Contains(typeAsByte))
+        else if (WallHashType.WallDiagonalCornerDownRight.Contains(typeAsByte))
             tile = wallDiagonalCornerDownRight;
-        else if (WallTypesHelper.WallDiagonalCornerUpRight.Contains(typeAsByte))
+        else if (WallHashType.WallDiagonalCornerUpRight.Contains(typeAsByte))
             tile = wallDiagonalCornerUpRight;
-        else if (WallTypesHelper.WallDiagonalCornerUpLeft.Contains(typeAsByte))
+        else if (WallHashType.WallDiagonalCornerUpLeft.Contains(typeAsByte))
             tile = wallDiagonalCornerUpLeft;
-        else if (WallTypesHelper.WallFullEightDirections.Contains(typeAsByte))
+        else if (WallHashType.WallFullEightDirections.Contains(typeAsByte))
             tile = wallFull;
-        else if (WallTypesHelper.WallBottomEightDirections.Contains(typeAsByte)) tile = wallBottom;
+        else if (WallHashType.WallBottomEightDirections.Contains(typeAsByte)) tile = wallBottom;
 
-        if (tile != null)
+        if (tile)
             SetSingleTile(wallTilemap, tile, position);
     }
 }

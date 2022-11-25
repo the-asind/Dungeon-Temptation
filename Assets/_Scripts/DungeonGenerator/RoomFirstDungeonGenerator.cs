@@ -47,6 +47,20 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
         return floor;
     }
+    
+    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
+    {
+        var floor = new HashSet<Vector2Int>();
+        foreach (var room in roomsList)
+            for (var col = offset; col < room.size.x - offset; col++)
+            for (var row = offset; row < room.size.y - offset; row++)
+            {
+                var position = (Vector2Int)room.min + new Vector2Int(col, row);
+                floor.Add(position);
+            }
+
+        return floor;
+    }
 
     private static HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
     {
@@ -103,19 +117,5 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         }
 
         return closest;
-    }
-
-    private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
-    {
-        var floor = new HashSet<Vector2Int>();
-        foreach (var room in roomsList)
-            for (var col = offset; col < room.size.x - offset; col++)
-            for (var row = offset; row < room.size.y - offset; row++)
-            {
-                var position = (Vector2Int)room.min + new Vector2Int(col, row);
-                floor.Add(position);
-            }
-
-        return floor;
     }
 }

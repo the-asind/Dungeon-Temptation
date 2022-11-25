@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public static class WallTypesHelper
+public static class WallHashType
 {
     /*
      * This "Magical numbers" is simple enough. It is like translator for engine "that walls you need to put".
@@ -15,6 +15,7 @@ public static class WallTypesHelper
      * Поиск идёт как часы: от вверха и по часовой стрелке (вверх, право, низ, лево). Затем итоговые нули и единицы
      * записываются в бинарном формате и передаются в этот ретранслатор.
      */
+   
     public static readonly HashSet<byte> WallTop = new()
     {
         0b1111,
@@ -42,6 +43,16 @@ public static class WallTypesHelper
     {
         0b1000
     };
+    
+    public static readonly HashSet<byte> WallFull = new()
+    {
+        0b1101,
+        0b0101,
+        0b1101,
+        0b1001
+    };
+
+    
 
     /*
      * Similar semantics: the passage is also diagonal, but ideologically identical to the variant above in the code.
@@ -111,14 +122,6 @@ public static class WallTypesHelper
     {
         0b00000100,
         0b00000101
-    };
-
-    public static readonly HashSet<byte> WallFull = new()
-    {
-        0b1101,
-        0b0101,
-        0b1101,
-        0b1001
     };
 
     public static readonly HashSet<byte> WallFullEightDirections = new()
