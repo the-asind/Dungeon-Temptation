@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using Random = System.Random;
 
 public class TilemapVisualizer : MonoBehaviour
 {
@@ -22,11 +24,29 @@ public class TilemapVisualizer : MonoBehaviour
         wallDiagonalCornerUpRight,
         wallDiagonalCornerUpLeft;
 
-    [SerializeField] private TileBase chests;
+    [SerializeField] private TileBase chestTile;
     
     public void SetFloorTiles(HashSet<Vector2Int> floorPositions)
     {
         SetTiles(floorPositions, floorTilemap, floorTile);
+
+        var set2 = new HashSet<Vector2Int>();
+        //alpha-like generating chests
+        var r = new Random();
+        foreach(var dinoToRemove in floorPositions
+                    .OrderBy(x => r.Next())
+                    .Take(45))
+        {
+            set2.Add(dinoToRemove);
+        }
+        
+        SetTiles(GenerateChests(set2), objectTilemap, chestTile);
+    }
+
+    private HashSet<Vector2Int> GenerateChests(HashSet<Vector2Int> floorPositions)
+    {
+        
+        return floorPositions;
     }
 
     private void SetTiles(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
@@ -67,6 +87,7 @@ public class TilemapVisualizer : MonoBehaviour
         objectTilemap.ClearAllTiles();
     }
 
+    //https://stackoverflow.com/questions/74549502/
     internal void SetSingleCornerWall(Vector2Int position, string binaryType)
     {
         var typeAsByte = Convert.ToByte(binaryType, 2);
