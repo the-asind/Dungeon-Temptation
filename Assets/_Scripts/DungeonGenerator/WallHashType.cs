@@ -18,7 +18,6 @@ public static class WallHashType
    
     public static readonly HashSet<byte> WallTop = new()
     {
-        0b1111,
         0b0110,
         0b0011,
         0b0010,
@@ -27,6 +26,11 @@ public static class WallHashType
         0b1110,
         0b1011,
         0b0111
+    };
+
+    public static readonly HashSet<byte> WallCenter = new()
+    {
+        0b1111
     };
 
     public static readonly HashSet<byte> WallSideLeft = new()

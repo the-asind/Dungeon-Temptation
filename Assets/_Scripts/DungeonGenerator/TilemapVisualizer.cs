@@ -7,9 +7,12 @@ public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField] private Tilemap floorTilemap, wallTilemap, objectTilemap;
 
-    [SerializeField] private TileBase floorTile, wallTop, wallSideRight;
-
-    [SerializeField] private TileBase wallBottom,
+    [SerializeField] private TileBase 
+        floorTile, 
+        wallTop, 
+        wallCenter,
+        wallSideRight, 
+        wallBottom,
         wallFull,
         wallInnerCornerDownLeft,
         wallInnerCornerDownRight,
@@ -37,6 +40,8 @@ public class TilemapVisualizer : MonoBehaviour
         TileBase tile = null;
         if (WallHashType.WallTop.Contains(typeAsByte))
             tile = wallTop;
+        else if (WallHashType.WallCenter.Contains(typeAsByte))
+            tile = wallCenter;
         else if (WallHashType.WallSideRight.Contains(typeAsByte))
             tile = wallSideRight;
         else if (WallHashType.WallSideLeft.Contains(typeAsByte))
