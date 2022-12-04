@@ -13,7 +13,7 @@ namespace DefaultNamespace
         public byte Strength { get; private set; }
         public byte Intelligence { get; private set; }
         public byte Level { get; private set; }
-        public Inventory Inventory { get; private set; }
+        //public Inventory Inventory { get; private set; }
         
         public void LevelUp()
         {
@@ -32,7 +32,7 @@ namespace DefaultNamespace
         {
             Health = (_health > 0) ? _health : throw new Exception("Wrong health value!");
             Defence = (_defence >= 0) ? _defence : throw new Exception("Wrong defence value!");
-            Cooldown = (_cooldown > 0) ? _cooldown : throw new Exception("Wrong cooldown value!");
+            MoveCooldown = (_cooldown > 0) ? _cooldown : throw new Exception("Wrong cooldown value!");
             Agility = (_agility > 0) ? _agility : throw new Exception("Wrong agility value!");
             Strength = (_strength > 0) ? _strength : throw new Exception("Wrong strength value!");
             Intelligence = (_intelligence > 0) ? _intelligence : throw new Exception("Wrong intelligence value!");

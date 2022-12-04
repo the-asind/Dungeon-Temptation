@@ -3,7 +3,7 @@ using System.Linq;
 using _Scripts.DungeonGenerator;
 using UnityEngine;
 
-public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
+public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
 {
     [SerializeField] private int minRoomWidth = 4, minRoomHeight = 4;
     [SerializeField] private int dungeonWidth = 20, dungeonHeight = 20;

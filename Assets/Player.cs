@@ -34,18 +34,24 @@ public class Player : Creature
     {
         timer += Time.deltaTime;
         if (timer < Cooldown) return;
-        
-        // Player rotation
-        if (moveDelta.x > 0)
-            transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
-        else if (moveDelta.x < 0)
-            transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+
+        switch (moveDelta.x)
+        {
+            // Player rotation
+            case > 0:
+                transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
+                break;
+            case < 0:
+                transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+                break;
+        }
 
         // X axis collidetation
         hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, moveDelta.y),
             Mathf.Abs(moveDelta.x * movementSpeed) + Mathf.Abs(moveDelta.y * movementSpeed), LayerMask.GetMask("Actor", "Blocking"));
-        
-        if (hit.collider == null)
+
+        if (hit.collider) return;
+        if (moveDelta != Vector2.zero)
         {
             transform.Translate(moveDelta.x * movementSpeed, moveDelta.y * movementSpeed, 0);
             timer = 0;
