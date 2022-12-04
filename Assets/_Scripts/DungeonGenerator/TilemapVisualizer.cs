@@ -29,24 +29,11 @@ public class TilemapVisualizer : MonoBehaviour
     public void SetFloorTiles(HashSet<Vector2Int> floorPositions)
     {
         SetTiles(floorPositions, floorTilemap, floorTile);
-
-        var set2 = new HashSet<Vector2Int>();
-        //alpha-like generating chests
-        var r = new Random();
-        foreach(var floor in floorPositions
-                    .OrderBy(x => r.Next())
-                    .Take(45))
-        {
-            set2.Add(floor);
-        }
-        
-        SetTiles(GenerateChests(set2), objectTilemap, chestTile);
     }
-
-    private HashSet<Vector2Int> GenerateChests(HashSet<Vector2Int> floorPositions)
+    
+    public void SetObjectTiles(HashSet<Vector2Int> objectChestPositions)
     {
-        
-        return floorPositions;
+        SetTiles(objectChestPositions, objectTilemap, chestTile);
     }
 
     private void SetTiles(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
