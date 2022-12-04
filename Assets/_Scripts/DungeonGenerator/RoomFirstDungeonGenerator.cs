@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.DungeonGenerator;
 using UnityEngine;
 
 public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
@@ -25,6 +26,8 @@ public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
         var roomCenters = roomsList.Select(room => (Vector2Int)Vector3Int.RoundToInt(room.center)).ToList();
 
         var corridors = ConnectRooms(roomCenters);
+        ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer);
+        
         floor.UnionWith(corridors);
 
         tilemapVisualizer.SetFloorTiles(floor);
