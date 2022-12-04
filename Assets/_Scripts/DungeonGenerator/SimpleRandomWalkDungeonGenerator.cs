@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-
 public class SimpleRandomWalkDungeonGenerator : AbstractDungeonGenerator
 {
 
