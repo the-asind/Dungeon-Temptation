@@ -33,11 +33,11 @@ public class TilemapVisualizer : MonoBehaviour
         var set2 = new HashSet<Vector2Int>();
         //alpha-like generating chests
         var r = new Random();
-        foreach(var dinoToRemove in floorPositions
+        foreach(var floor in floorPositions
                     .OrderBy(x => r.Next())
                     .Take(45))
         {
-            set2.Add(dinoToRemove);
+            set2.Add(floor);
         }
         
         SetTiles(GenerateChests(set2), objectTilemap, chestTile);
