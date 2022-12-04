@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts.DungeonGenerator;
 using UnityEngine;
-using UnityEngine.Rendering;
 
-public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
+public class RoomFirstDungeonGenerator : SimpleRandomWalkDungeonGenerator
 {
     [SerializeField] private int minRoomWidth = 4, minRoomHeight = 4;
     [SerializeField] private int dungeonWidth = 20, dungeonHeight = 20;
@@ -15,8 +13,6 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
     {
         CreateRooms();
     }
-
-    public int GetDungeonSize() => Mathf.Max(dungeonHeight, dungeonWidth);
 
     private void CreateRooms()
     {
@@ -29,10 +25,8 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
         var roomCenters = roomsList.Select(room => (Vector2Int)Vector3Int.RoundToInt(room.center)).ToList();
 
         var corridors = ConnectRooms(roomCenters);
-        ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer);
-        
         floor.UnionWith(corridors);
-        
+
         tilemapVisualizer.SetFloorTiles(floor);
         WallGenerator.CreateWalls(floor, tilemapVisualizer);
     }
