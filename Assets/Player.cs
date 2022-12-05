@@ -5,6 +5,7 @@ using System.Numerics;
 using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Update = UnityEngine.PlayerLoop.Update;
 using Vector2 = UnityEngine.Vector2;
@@ -17,7 +18,9 @@ public class Player : Creature
     private RaycastHit2D hit;
     public float movementSpeed = 1f;
     public float timer = 0;
-    public float Cooldown = 0.05f;
+    public float cooldown = 0.05f;
+
+    public Animator animator;
 
     private RoomDungeonGenerator room;
     public Vector3 ladderPos;
@@ -44,7 +47,7 @@ public class Player : Creature
     public override void Move()
     {
         timer += Time.deltaTime;
-        if (timer < Cooldown) return;
+        if (timer < cooldown) return;
 
         switch (moveDelta.x)
         {
@@ -66,6 +69,7 @@ public class Player : Creature
         {
             transform.Translate(moveDelta.x * movementSpeed, moveDelta.y * movementSpeed, 0);
             timer = 0;
+            animator.SetTrigger("IsMoving");
         }
     }
 
@@ -73,7 +77,6 @@ public class Player : Creature
     {
         var position = (Vector2) coordinates;
         position.x += 0.5f;
-        position.y += 0.5f;
         transform.position = (Vector3) position;
     }
     
@@ -86,7 +89,6 @@ public class Player : Creature
     {
         var position = (Vector2) floor;
         position.x += 0.5f;
-        position.y += 0.5f;
         ladderPos = position;
     }
 }
