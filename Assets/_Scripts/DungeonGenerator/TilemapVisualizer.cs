@@ -7,11 +7,11 @@ public class TilemapVisualizer : MonoBehaviour
 {
     [SerializeField] private Tilemap floorTilemap, wallTilemap, objectTilemap;
 
-    [SerializeField] private TileBase 
-        floorTile, 
-        wallTop, 
+    [SerializeField] private TileBase
+        floorTile,
+        wallTop,
         wallCenter,
-        wallSideRight, 
+        wallSideRight,
         wallBottom,
         wallFull,
         wallInnerCornerDownLeft,
@@ -22,16 +22,23 @@ public class TilemapVisualizer : MonoBehaviour
         wallDiagonalCornerUpRight,
         wallDiagonalCornerUpLeft;
 
-    [SerializeField] private TileBase chestTile;
-    
+    [SerializeField] private TileBase
+        chestTile,
+        ladderTile;
+
     public void SetFloorTiles(HashSet<Vector2Int> floorPositions)
     {
         SetTiles(floorPositions, floorTilemap, floorTile);
     }
-    
-    public void SetObjectTiles(HashSet<Vector2Int> objectChestPositions)
+
+    public void SetChestTiles(HashSet<Vector2Int> chestPositions)
     {
-        SetTiles(objectChestPositions, objectTilemap, chestTile);
+        SetTiles(chestPositions, objectTilemap, chestTile);
+    }
+
+    public void SetLadderTiles(HashSet<Vector2Int> ladderPositions)
+    {
+        SetTiles(ladderPositions, objectTilemap, ladderTile);
     }
 
     private void SetTiles(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)

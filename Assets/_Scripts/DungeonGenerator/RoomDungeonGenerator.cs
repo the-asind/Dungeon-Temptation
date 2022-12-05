@@ -10,6 +10,11 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
     [SerializeField] [Range(0, 10)] private int offset = 1;
     [SerializeField] private bool randomWalkRooms;
 
+    public void Start()
+    {
+        GenerateDungeon();
+    }
+    
     protected override void RunProceduralGeneration()
     {
         CreateRooms();
@@ -26,8 +31,8 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
         var roomCenters = roomsList.Select(room => (Vector2Int)Vector3Int.RoundToInt(room.center)).ToList();
 
         var corridors = ConnectRooms(roomCenters);
-        ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer);
-        
+        ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer, player);
+
         floor.UnionWith(corridors);
 
         tilemapVisualizer.SetFloorTiles(floor);
@@ -50,7 +55,7 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
 
         return floor;
     }
-    
+
     private HashSet<Vector2Int> CreateSimpleRooms(List<BoundsInt> roomsList)
     {
         var floor = new HashSet<Vector2Int>();
@@ -68,7 +73,7 @@ public class RoomDungeonGenerator : SimpleRandomWalkDungeonGenerator
     private static HashSet<Vector2Int> ConnectRooms(List<Vector2Int> roomCenters)
     {
         var corridors = new HashSet<Vector2Int>();
-        var currentRoomCenter = roomCenters[Random.Range(0, roomCenters.Count-1)];
+        var currentRoomCenter = roomCenters[Random.Range(0, roomCenters.Count - 1)];
         roomCenters.Remove(currentRoomCenter);
 
         while (roomCenters.Count > 0)

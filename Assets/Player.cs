@@ -5,6 +5,8 @@ using System.Numerics;
 using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
+using Update = UnityEngine.PlayerLoop.Update;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 
@@ -16,14 +18,23 @@ public class Player : Creature
     public float movementSpeed = 1f;
     public float timer = 0;
     public float Cooldown = 0.05f;
+
+    private RoomDungeonGenerator room;
+    public Vector3 ladderPos;
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
     }
     private void Update()
     {
         moveDelta.x = Input.GetAxisRaw("Horizontal");
         moveDelta.y = Input.GetAxisRaw("Vertical");
+        
+        if (transform.position == ladderPos)
+        {
+            room.GenerateDungeon();
+        }
     }
 
     public override void Attack()
@@ -39,10 +50,10 @@ public class Player : Creature
         {
             // Player rotation
             case > 0:
-                transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
+                transform.localScale = new Vector3(6.25f, 6.25f, 0f);
                 break;
             case < 0:
-                transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+                transform.localScale = new Vector3(-6.25f, 6.25f, 0f);
                 break;
         }
 
@@ -57,8 +68,25 @@ public class Player : Creature
             timer = 0;
         }
     }
+
+    public void TeleportToTileCoordinates(Vector2Int coordinates)
+    {
+        var position = (Vector2) coordinates;
+        position.x += 0.5f;
+        position.y += 0.5f;
+        transform.position = (Vector3) position;
+    }
+    
     private void FixedUpdate()
     {
         Move();
+    }
+
+    public void SetLadderPos(Vector2Int floor)
+    {
+        var position = (Vector2) floor;
+        position.x += 0.5f;
+        position.y += 0.5f;
+        ladderPos = position;
     }
 }
