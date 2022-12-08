@@ -21,6 +21,7 @@ public class Player : Creature
         Health = GetComponent<Health>();
         sr = GetComponent<SpriteRenderer>();
         room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
+        this.MoveCooldown = 0.4f;
     }
 
     private void Update()

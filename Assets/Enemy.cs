@@ -8,9 +8,10 @@ namespace DungeonCreature
     {
         private PlayerTransform Player;
         private RaycastHit2D hit;
-        private BoxCollider2D boxCollider;
+        public BoxCollider2D boxCollider;
         public double timer = 0;
-
+        public SpriteRenderer sr;
+        public Animator Animator; 
         public Enemy() : base()
         {
         }
@@ -26,6 +27,8 @@ namespace DungeonCreature
             this.Health = GetComponent<Health>();
             Player = gameObject.AddComponent<PlayerTransform>();
             boxCollider = GetComponent<BoxCollider2D>();
+            sr = gameObject.AddComponent<SpriteRenderer>();
+            Animator = gameObject.AddComponent<Animator>();
         }
 
         void Update()
