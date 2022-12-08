@@ -27,6 +27,7 @@ namespace DefaultNamespace
             Enemy enemy = gameObject.AddComponent<Enemy>();
             enemy.transform.position = (Vector3)coordinates;
         }
+        
         private void Start()
         {
             this.Health = GetComponent<Health>();

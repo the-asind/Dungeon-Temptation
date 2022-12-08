@@ -28,6 +28,7 @@ namespace DefaultNamespace
             byte _intelligence = 1, byte _level = 1)
 
         {
+            //Health = gameObject.AddComponent<Health>();
             Defence = (_defence >= 0) ? _defence : throw new Exception("Wrong defence value!");
             MoveCooldown = (_moveCooldown > 0) ? _moveCooldown : throw new Exception("Wrong moveCooldown value!");
             AttackCooldown = (_attackCooldown > 0) ? _attackCooldown : throw new Exception("Wrong attackCooldown value!");

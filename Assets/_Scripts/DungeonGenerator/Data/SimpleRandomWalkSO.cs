@@ -1,8 +1,11 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "SimpleRandomWalkParameters_", menuName = "PCG/SimpleRandomWalkData")]
-public class SimpleRandomWalkSO : ScriptableObject
+namespace _Scripts.DungeonGenerator
 {
-    public int iterations = 10, walkLength = 10;
-    public bool startRandomlyEachIteration = true;
+    [CreateAssetMenu(fileName = "SimpleRandomWalkParameters_", menuName = "PCG/SimpleRandomWalkData")]
+    public class SimpleRandomWalkSO : ScriptableObject
+    {
+        public int iterations = 10, walkLength = 10;
+        public bool startRandomlyEachIteration = true;
+    }
 }

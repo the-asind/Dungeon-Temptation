@@ -1,3 +1,4 @@
+using _Scripts.DungeonGenerator;
 using UnityEditor;
 using UnityEngine;
 
@@ -10,7 +11,6 @@ namespace Editor
 
         private void Awake()
         {
-            _generator = (AbstractDungeonGenerator)target;
         }
 
         public override void OnInspectorGUI()

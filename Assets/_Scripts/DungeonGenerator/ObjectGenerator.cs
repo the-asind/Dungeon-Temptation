@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using DefaultNamespace;
 using UnityEngine;
 using Random = System.Random;
 
@@ -8,18 +9,17 @@ namespace _Scripts.DungeonGenerator
     public static class ObjectGenerator
     {
         public static void GenerateCreatures(HashSet<Vector2Int> floorPositions, TilemapVisualizer tilemapVisualizer,
-            Player player)
+            Player player, EnemySpawner e)
         {
             var chestPositions = new HashSet<Vector2Int>();
             var enemyPositions = new HashSet<Vector2Int>();
-            var playerSpawnPosition = new HashSet<Vector2Int>();
             var ladderPosition = new HashSet<Vector2Int>();
             var take = floorPositions.Count / 20;
             take = take % 2 == 0 ? take : take + 1;
 
             var r = new Random();
             foreach (var floor in floorPositions
-                         .OrderBy(x => r.Next())
+                         .OrderBy(_ => r.Next())
                          .Take(take))
             {
                 while (chestPositions.Count < take / 2 - 1)
@@ -40,12 +40,17 @@ namespace _Scripts.DungeonGenerator
                     player.SetLadderPos(floor);
                     continue;
                 }
-            
+
                 player.TeleportToTileCoordinates(floor);
             }
 
             tilemapVisualizer.SetChestTiles(chestPositions);
             tilemapVisualizer.SetLadderTiles(ladderPosition);
+
+            foreach (var enemyPosition in enemyPositions)
+            {
+                e.SpawnEnemy(enemyPosition);
+            }
         }
     }
 }

@@ -1,18 +1,28 @@
+using DefaultNamespace;
 using UnityEngine;
 
-public abstract class AbstractDungeonGenerator : MonoBehaviour
+namespace _Scripts.DungeonGenerator
 {
-    [SerializeField] protected TilemapVisualizer tilemapVisualizer;
-    [SerializeField] protected Player player;
-    [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
-
-
-    public void GenerateDungeon()
+    public abstract class AbstractDungeonGenerator : MonoBehaviour
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
-        tilemapVisualizer.Clear();
-        RunProceduralGeneration();
-    }
+        [SerializeField] protected TilemapVisualizer tilemapVisualizer;
+        [SerializeField] protected Player player;
+        [SerializeField] protected EnemySpawner e;
+        [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
 
-    protected abstract void RunProceduralGeneration();
+        private void Awake()
+        {
+            player = GameObject.Find("Player").GetComponent<Player>();
+            tilemapVisualizer.Clear();
+            e = gameObject.AddComponent<EnemySpawner>();
+        }
+
+        public void GenerateDungeon()
+        {
+            FindObjectOfType<AudioManager>().PlayNextMusic();
+            RunProceduralGeneration();
+        }
+
+        protected abstract void RunProceduralGeneration();
+    }
 }
