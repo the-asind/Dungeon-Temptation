@@ -55,18 +55,18 @@ namespace _Scripts.DungeonGenerator
         {
             var typeAsByte = Convert.ToByte(binaryType, 2);
             TileBase tile = null;
-            
-            var tileTypes = new (HashSet<byte> value, TileBase tile)[] {
-                (WallHashType.WallTop, wallTop),
-                (WallHashType.WallCenter, wallCenter),
-                (WallHashType.WallSideRight, wallSideRight),
-                (WallHashType.WallSideLeft, wallSideLeft),
-                (WallHashType.WallBottom, wallBottom),
-                (WallHashType.WallFull, wallFull)
-            };
-            
-            var tileType = tileTypes.FirstOrDefault(t => t.value.Contains(typeAsByte));
-            
+            if (WallHashType.WallTop.Contains(typeAsByte))
+                tile = wallTop;
+            else if (WallHashType.WallCenter.Contains(typeAsByte))
+                tile = wallCenter;
+            else if (WallHashType.WallSideRight.Contains(typeAsByte))
+                tile = wallSideRight;
+            else if (WallHashType.WallSideLeft.Contains(typeAsByte))
+                tile = wallSideLeft;
+            else if (WallHashType.WallBottom.Contains(typeAsByte))
+                tile = wallBottom;
+            else if (WallHashType.WallFull.Contains(typeAsByte)) tile = wallFull;
+
             if (tile)
                 SetSingleTile(wallTilemap, tile, position);
         }
@@ -88,8 +88,6 @@ namespace _Scripts.DungeonGenerator
         {
             var typeAsByte = Convert.ToByte(binaryType, 2);
             TileBase tile = null;
-
-            Mathf.Round(position.x, 0.5);
 
             if (WallHashType.WallInnerCornerDownLeft.Contains(typeAsByte))
                 tile = wallInnerCornerDownLeft;

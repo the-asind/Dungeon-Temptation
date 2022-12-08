@@ -1,3 +1,5 @@
+using _Scripts;
+using _Scripts.DungeonGenerator;
 using DungeonCreature;
 using UnityEngine;
 
@@ -21,15 +23,14 @@ public class Player : Creature
         boxCollider = GetComponent<BoxCollider2D>();
         Health = GetComponent<Health>();
         sr = GetComponent<SpriteRenderer>();
-        //room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
+        room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
     }
     private void Update()
     {
         moveDelta.x = Input.GetAxisRaw("Horizontal");
         moveDelta.y = Input.GetAxisRaw("Vertical");
 
-        //if (transform.position == ladderPos) room.GenerateDungeon();
-        if (transform.position == ladderPos) room.Start();
+        if (transform.position == ladderPos) room.GenerateDungeon();
     }
 
     public override void Move()

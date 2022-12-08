@@ -1,4 +1,4 @@
-using DefaultNamespace;
+using DungeonCreature;
 using UnityEngine;
 
 namespace _Scripts.DungeonGenerator
@@ -13,13 +13,13 @@ namespace _Scripts.DungeonGenerator
         private void Awake()
         {
             player = GameObject.Find("Player").GetComponent<Player>();
-            tilemapVisualizer.Clear();
             e = gameObject.AddComponent<EnemySpawner>();
         }
 
         public void GenerateDungeon()
         {
             FindObjectOfType<AudioManager>().PlayNextMusic();
+            tilemapVisualizer.Clear();
             RunProceduralGeneration();
         }
 

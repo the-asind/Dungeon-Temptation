@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using DefaultNamespace;
+using DungeonCreature;
 using UnityEngine;
 using Random = System.Random;
 
