@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public abstract class AbstractDungeonGenerator : MonoBehaviour
@@ -7,7 +6,6 @@ public abstract class AbstractDungeonGenerator : MonoBehaviour
     [SerializeField] protected Player player;
     [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
 
-    
 
     public void GenerateDungeon()
     {
