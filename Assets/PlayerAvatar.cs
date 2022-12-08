@@ -14,6 +14,4 @@ public class PlayerAvatar : MonoBehaviour
         AvatarSprite = GetComponent<Image>();
         AvatarSprite.sprite = PlayerSprite.sprite;
     }
-
-     
 }

@@ -5,11 +5,10 @@ namespace DefaultNamespace
 {
     public class Health : MonoBehaviour
     {
-        [SerializeField]
         private int health = 100;
 
         private int MAX_HEALTH = 100;
-        
+
         public void Damage(int damage)
         {
             if (damage < 0)
@@ -31,7 +30,6 @@ namespace DefaultNamespace
 
         private void Die()
         {
-            Debug.Log("i'm dead");
             Destroy(gameObject);
         }
     }

@@ -20,8 +20,16 @@ namespace DefaultNamespace
         private BoxCollider2D boxCollider;
         public double timer = 0;
 
+        public Enemy() : base() {} 
+        
+        public Enemy(Vector2 coordinates)
+        {
+            Enemy enemy = gameObject.AddComponent<Enemy>();
+            enemy.transform.position = (Vector3)coordinates;
+        }
         private void Start()
         {
+            this.Health = GetComponent<Health>();
             boxCollider = GetComponent<BoxCollider2D>();
         }
         void Update()

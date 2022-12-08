@@ -21,13 +21,15 @@ public class Player : Creature
     public float timer = 0;
     public float cooldown = 0.05f;
     private SpriteRenderer sr;
-    public Animator animator;
+    private Animator animator;
 
     private RoomDungeonGenerator room;
     public Vector3 ladderPos;
     private void Start()
     {
         boxCollider = GetComponent<BoxCollider2D>();
+        Health = GetComponent<Health>();
+        sr = GetComponent<SpriteRenderer>();
         room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
     }
     private void Update()
@@ -50,12 +52,12 @@ public class Player : Creature
 
         if (moveDelta.x > 0)
         {
-            sr.flipX = true;
+            sr.flipX = false;
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
         }
         else if (moveDelta.x < 0)
         {
-            sr.flipX = false;
+            sr.flipX = true;
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
         }
         else if (moveDelta.y > 0)
@@ -66,7 +68,7 @@ public class Player : Creature
         {
             attackArea.transform.rotation = new Quaternion(0f, 0f, 1, 0f);
         }
-        Debug.Log(attackArea.transform.rotation);
+        
         // X axis collidetation
         hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, moveDelta.y),
             Mathf.Abs(moveDelta.x * movementSpeed) + Mathf.Abs(moveDelta.y * movementSpeed), LayerMask.GetMask("Actor", "Blocking"));

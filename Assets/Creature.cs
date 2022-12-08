@@ -5,7 +5,7 @@ namespace DefaultNamespace
 {
     public abstract class Creature : MonoBehaviour
     {
-        public double Health { get; private set; }
+        public Health Health { get; set; }
         public double Defence { get; private set; }
         public float MoveCooldown { get; private set; }
         public float AttackCooldown { get; private set; }
@@ -22,13 +22,12 @@ namespace DefaultNamespace
 
         public abstract void Move();
 
-        public Creature(double _health = 100, double _defence = 0, float _moveCooldown = 0.7f,
+        public Creature(double _defence = 0, float _moveCooldown = 0.7f,
             float _attackCooldown = 0.4f,
             byte _agility = 1, byte _strength = 1,
             byte _intelligence = 1, byte _level = 1)
 
         {
-            Health = (_health > 0) ? _health : throw new Exception("Wrong health value!");
             Defence = (_defence >= 0) ? _defence : throw new Exception("Wrong defence value!");
             MoveCooldown = (_moveCooldown > 0) ? _moveCooldown : throw new Exception("Wrong moveCooldown value!");
             AttackCooldown = (_attackCooldown > 0) ? _attackCooldown : throw new Exception("Wrong attackCooldown value!");
