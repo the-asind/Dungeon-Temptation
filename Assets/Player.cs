@@ -22,13 +22,28 @@ public class Player : Creature
 
     public Animator animator;
 
+    //[SerializeField] private UI_Inventory uiInventory;
+    //private Inventory inventory;
+
     private RoomDungeonGenerator room;
     public Vector3 ladderPos;
+
+    
     private void Start()
     {
+        //inventory = new Inventory();
         boxCollider = GetComponent<BoxCollider2D>();
         room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
+        //Debug.Log("Start");
+        //uiInventory.SetInventory(inventory);
+
     }
+    //private void Awake()
+    //{
+    //    //inventory = new Inventory();
+    //    uiInventory.SetInventory(inventory);
+    //    Debug.Log("Player Awake");
+    //}
     private void Update()
     {
         moveDelta.x = Input.GetAxisRaw("Horizontal");
