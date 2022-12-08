@@ -5,6 +5,7 @@ using System.Numerics;
 using DefaultNamespace;
 using Unity.VisualScripting;
 using UnityEngine;
+using Quaternion = UnityEngine.Quaternion;
 using UnityEngine.Serialization;
 using UnityEngine.UIElements;
 using Update = UnityEngine.PlayerLoop.Update;
@@ -47,19 +48,33 @@ public class Player : Creature
     public override void Move()
     {
         timer += Time.deltaTime;
-        if (timer < cooldown) return;
+        if (timer < MoveCooldown) return;
 
-        switch (moveDelta.x)
+        GameObject attackArea = transform.GetChild(0).gameObject;
+
+        // Player rotation, AttackArea rotation doesn't work
+        if (moveDelta.x > 0)
         {
-            // Player rotation
-            case > 0:
-                transform.localScale = new Vector3(6.25f, 6.25f, 0f);
-                break;
-            case < 0:
-                transform.localScale = new Vector3(-6.25f, 6.25f, 0f);
-                break;
+            GetComponent<SpriteRenderer>().flipX = false;
+            attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
+            //transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
         }
-
+        else if (moveDelta.x < 0)
+        {
+            GetComponent<SpriteRenderer>().flipX = true;
+            
+            attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
+            //transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
+        }
+        else if (moveDelta.y > 0)
+        {
+            attackArea.transform.rotation = new Quaternion(0f, 0f, 0f, 1f);
+        }
+        else if (moveDelta.y < 0)
+        {
+            attackArea.transform.rotation = new Quaternion(0f, 0f, 1, 0f);
+        }
+        Debug.Log(attackArea.transform.rotation);
         // X axis collidetation
         hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, moveDelta.y),
             Mathf.Abs(moveDelta.x * movementSpeed) + Mathf.Abs(moveDelta.y * movementSpeed), LayerMask.GetMask("Actor", "Blocking"));
@@ -67,7 +82,7 @@ public class Player : Creature
         if (hit.collider) return;
         if (moveDelta != Vector2.zero)
         {
-            transform.Translate(moveDelta.x * movementSpeed, moveDelta.y * movementSpeed, 0);
+            transform.Translate(moveDelta.x, moveDelta.y, 0);
             timer = 0;
             animator.SetTrigger("IsMoving");
         }
