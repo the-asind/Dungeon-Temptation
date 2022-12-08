@@ -1,25 +1,33 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DungeonCreature
 {
     public class EnemySpawner : MonoBehaviour
     {
         private System.Random r;
-        public Sprite[] Sprites;
-        public RuntimeAnimatorController[] Animations;
+        public Sprite sprite;
+        private EnemyList _enemyList = new EnemyList();
+        
+        //public RuntimeAnimatorController[] Animations;
+        
+        // void Start() {
+        //     SpriteRenderer renderer = GetComponent<SpriteRenderer>();
+        //     renderer.sprite = Sprite;
+        // }
+        
         public void SpawnEnemy(Vector2 coordinates)
         {
-            Enemy enemy = gameObject.AddComponent<Enemy>();
-            int index = r.Next(0, Sprites.Length);
-            enemy.transform.position = coordinates;
-            enemy.sr.sprite = Sprites[index];
-            enemy.Animator.runtimeAnimatorController = Animations[index];
-            enemy.boxCollider.size = new Vector2(0.1f,0.1f);
+            
+            //int index = r.Next(0, Sprite.Length);
+            _enemyList.CreateEnemy(coordinates, sprite);
+            
         }
 
         public EnemySpawner()
         {
             r = new System.Random();
+            //Animations = new RuntimeAnimatorController[1];
         }
     }
 }

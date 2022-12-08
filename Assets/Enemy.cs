@@ -6,14 +6,25 @@ namespace DungeonCreature
 {
     public class Enemy : Creature
     {
-        private PlayerTransform Player;
+        public PlayerTransform Player;
         private RaycastHit2D hit;
         public BoxCollider2D boxCollider;
         public double timer = 0;
         public SpriteRenderer sr;
-        public Animator Animator; 
-        public Enemy() : base()
+        public Animator Animator;
+
+        public Enemy() 
         {
+            
+        }
+
+        public void Awake()
+        {
+            //this.Health = GetComponent<Health>();
+            this.Player = gameObject.AddComponent<PlayerTransform>();
+            this.boxCollider = gameObject.AddComponent<BoxCollider2D>();
+            this.sr = gameObject.AddComponent<SpriteRenderer>();
+            this.Animator = gameObject.AddComponent<Animator>();
         }
 
         public Enemy(Vector2 coordinates)
@@ -22,19 +33,10 @@ namespace DungeonCreature
             enemy.transform.position = (Vector3)coordinates;
         }
 
-        private void Start()
-        {
-            this.Health = GetComponent<Health>();
-            Player = gameObject.AddComponent<PlayerTransform>();
-            boxCollider = GetComponent<BoxCollider2D>();
-            sr = gameObject.AddComponent<SpriteRenderer>();
-            Animator = gameObject.AddComponent<Animator>();
-        }
-
         void Update()
         {
-            if (Player.PlayerPosition != null)
-                Move();
+            // if (Player.PlayerPosition != null) ОБРАТИ ВНМАНИЕ
+            //     Move();
         }
 
         public override void Move()

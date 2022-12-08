@@ -49,7 +49,8 @@ namespace _Scripts.DungeonGenerator
 
             foreach (var enemyPosition in enemyPositions)
             {
-                e.SpawnEnemy(enemyPosition);
+                //не работает код ниже:
+                //e.SpawnEnemy(CoordinateManipulation.ToWorldCoord(enemyPosition));
             }
         }
     }

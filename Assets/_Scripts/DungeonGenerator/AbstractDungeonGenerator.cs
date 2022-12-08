@@ -13,7 +13,7 @@ namespace _Scripts.DungeonGenerator
         private void Awake()
         {
             player = GameObject.Find("Player").GetComponent<Player>();
-            e = gameObject.AddComponent<EnemySpawner>();
+            e = GameObject.Find("Enemy Spawner").GetComponent<EnemySpawner>();
         }
 
         public void GenerateDungeon()
