@@ -7,8 +7,8 @@ namespace DungeonCreature
     {
         public Health Health { get; set; }
         public double Defence { get; private set; }
-        public float MoveCooldown { get; private set; }
-        public float AttackCooldown { get; private set; }
+        public float MoveCooldown { get; set; }
+        public float AttackCooldown { get; set; }
         public byte Agility { get; private set; }
         public byte Strength { get; private set; }
         public byte Intelligence { get; private set; }
