@@ -41,10 +41,6 @@ public class Player : Creature
         }
     }
 
-    public override void Attack()
-    {
-                
-    }
     public override void Move()
     {
         timer += Time.deltaTime;
@@ -52,19 +48,15 @@ public class Player : Creature
 
         GameObject attackArea = transform.GetChild(0).gameObject;
 
-        // Player rotation, AttackArea rotation doesn't work
         if (moveDelta.x > 0)
         {
             GetComponent<SpriteRenderer>().flipX = false;
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
-            //transform.localScale = new Vector3(6.25f, 6.25f, 6.25f);
         }
         else if (moveDelta.x < 0)
         {
             GetComponent<SpriteRenderer>().flipX = true;
-            
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
-            //transform.localScale = new Vector3(-6.25f, 6.25f, 6.25f);
         }
         else if (moveDelta.y > 0)
         {

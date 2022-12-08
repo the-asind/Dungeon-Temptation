@@ -22,9 +22,8 @@ namespace DefaultNamespace
 
         public abstract void Move();
 
-        public abstract void Attack();
-
-        public Creature(double _health = 100, double _defence = 0, float _cooldown = 0.7f,
+        public Creature(double _health = 100, double _defence = 0, float _moveCooldown = 0.7f,
+            float _attackCooldown = 0.4f,
             byte _agility = 1, byte _strength = 1,
             byte _intelligence = 1, byte _level = 1)
 

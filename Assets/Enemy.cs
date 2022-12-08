@@ -24,12 +24,11 @@ namespace DefaultNamespace
         {
             boxCollider = GetComponent<BoxCollider2D>();
         }
-
         void Update()
         {
             Move();
         }
-
+    
         public override void Move()
         {
             
