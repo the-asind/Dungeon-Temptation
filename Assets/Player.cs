@@ -20,7 +20,7 @@ public class Player : Creature
     public float movementSpeed = 1f;
     public float timer = 0;
     public float cooldown = 0.05f;
-
+    private SpriteRenderer sr;
     public Animator animator;
 
     private RoomDungeonGenerator room;
@@ -50,12 +50,12 @@ public class Player : Creature
 
         if (moveDelta.x > 0)
         {
-            GetComponent<SpriteRenderer>().flipX = false;
+            sr.flipX = true;
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
         }
         else if (moveDelta.x < 0)
         {
-            GetComponent<SpriteRenderer>().flipX = true;
+            sr.flipX = false;
             attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
         }
         else if (moveDelta.y > 0)
