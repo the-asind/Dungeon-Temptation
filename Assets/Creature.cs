@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace DefaultNamespace
+namespace DungeonCreature
 {
     public abstract class Creature : MonoBehaviour
     {
@@ -36,6 +36,11 @@ namespace DefaultNamespace
             Strength = (_strength > 0) ? _strength : throw new Exception("Wrong strength value!");
             Intelligence = (_intelligence > 0) ? _intelligence : throw new Exception("Wrong intelligence value!");
             Level = (_level > 0) ? _level : throw new Exception("Wrong intelligence value!");
+        }
+
+        private void Start()
+        {
+            Health = gameObject.AddComponent<Health>();
         }
     }
 }

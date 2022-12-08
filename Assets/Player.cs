@@ -1,13 +1,11 @@
-using _Scripts;
-using _Scripts.DungeonGenerator;
-using DefaultNamespace;
+using DungeonCreature;
 using UnityEngine;
 
 public class Player : Creature
 {
-    private RaycastHit2D hit;
     private BoxCollider2D boxCollider;
     private Vector2 moveDelta;
+    private RaycastHit2D hit;
     public float movementSpeed = 1f;
     public float timer;
     public float cooldown = 0.05f;
@@ -15,9 +13,7 @@ public class Player : Creature
     private Animator animator;
 
     private RoomDungeonGenerator room;
-    
     public Vector3 ladderPos;
-    private static readonly int IsMoving = Animator.StringToHash("IsMoving");
 
     private void Start()
     {
@@ -27,7 +23,6 @@ public class Player : Creature
         sr = GetComponent<SpriteRenderer>();
         //room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
     }
-
     private void Update()
     {
         moveDelta.x = Input.GetAxisRaw("Horizontal");
@@ -41,7 +36,7 @@ public class Player : Creature
     {
         timer += Time.deltaTime;
         if (timer < MoveCooldown) return;
-
+        
         var attackArea = transform.GetChild(0).gameObject;
 
         if (moveDelta.x > 0)
@@ -62,7 +57,7 @@ public class Player : Creature
         {
             attackArea.transform.rotation = new Quaternion(0f, 0f, 1, 0f);
         }
-
+        
         // X axis collidetation
         hit = Physics2D.BoxCast(transform.position, boxCollider.size, 0, new Vector2(moveDelta.x, moveDelta.y),
             Mathf.Abs(moveDelta.x * movementSpeed) + Mathf.Abs(moveDelta.y * movementSpeed),
@@ -73,7 +68,7 @@ public class Player : Creature
         {
             transform.Translate(moveDelta.x, moveDelta.y, 0);
             timer = 0;
-            animator.SetTrigger(IsMoving);
+            animator.SetTrigger("IsMoving");
         }
     }
 
@@ -81,7 +76,7 @@ public class Player : Creature
     {
         transform.position = CoordinateManipulation.ToWorldCoord(coordinates);
     }
-
+    
     private void FixedUpdate()
     {
         Move();
