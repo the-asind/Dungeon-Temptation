@@ -23,23 +23,20 @@ public class UI_Inventory : MonoBehaviour
 
     private void RefreshInventoryItems()
     {
-        Debug.Log(inventory.GetItemList().Count);
         int x = 0;
-        int y = 1;
+        int y = 0;
         float itemSlotCellSize = 60f;
-        //itemSlotTemplate.gameObject.SetActive(true);
         foreach (Item item in inventory.GetItemList())
         {
-            RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotTemplate).GetComponent<RectTransform>();
+            RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
             x++;
-            if (x > 4)
+            if (x > 3)
             {
                 x = 0;
-                y++;
+                y--;
             }
         }
-        //itemSlotTemplate.gameObject.SetActive(false);
     }
 }
