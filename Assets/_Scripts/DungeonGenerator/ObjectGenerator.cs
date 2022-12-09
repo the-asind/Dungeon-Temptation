@@ -9,7 +9,7 @@ namespace _Scripts.DungeonGenerator
     public static class ObjectGenerator
     {
         public static void GenerateCreatures(HashSet<Vector2Int> floorPositions, TilemapVisualizer tilemapVisualizer,
-            Player player, EnemySpawner e)
+            PlayerBehaviour player, EnemySpawner e)
         {
             var chestPositions = new HashSet<Vector2Int>();
             var enemyPositions = new HashSet<Vector2Int>();
