@@ -13,6 +13,7 @@ namespace DefaultNamespace
         public byte Strength { get; private set; }
         public byte Intelligence { get; private set; }
         public byte Level { get; private set; }
+        public static int XP { get; set; }
         //public Inventory Inventory { get; private set; }
         
         public void LevelUp()
@@ -27,7 +28,7 @@ namespace DefaultNamespace
 
         public Creature(double _health = 100, double _defence = 0, float _cooldown = 0.7f,
             byte _agility = 1, byte _strength = 1,
-            byte _intelligence = 1, byte _level = 1)
+            byte _intelligence = 1, byte _level = 1, int XP = 0)
 
         {
             Health = (_health > 0) ? _health : throw new Exception("Wrong health value!");

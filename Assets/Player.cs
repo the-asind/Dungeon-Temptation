@@ -44,6 +44,7 @@ public class Player : Creature
     {
                 
     }
+
     public override void Move()
     {
         timer += Time.deltaTime;
