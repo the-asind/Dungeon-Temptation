@@ -108,33 +108,5 @@ namespace _Scripts.DungeonGenerator
             if (tile)
                 SetSingleTile(wallTilemap, tile, position);
         }
-
-        // internal void SetSingleCornerWall(Vector2Int position, string binaryType)
-        // {
-        //     var typeAsByte = Convert.ToByte(binaryType, 2);
-        //     TileBase tile = null;
-        //
-        //     // Create an array of tuples that contains the possible values of typeAsByte
-        //     // and the corresponding tile
-        //     var tileTypes = new (HashSet<byte> value, TileBase tile)[] {
-        //         (WallHashType.WallInnerCornerDownLeft, wallInnerCornerDownLeft),
-        //         (WallHashType.WallInnerCornerDownRight, wallInnerCornerDownRight),
-        //         (WallHashType.WallDiagonalCornerDownLeft, wallDiagonalCornerDownLeft),
-        //         (WallHashType.WallDiagonalCornerDownRight, wallDiagonalCornerDownRight),
-        //         (WallHashType.WallDiagonalCornerUpRight, wallDiagonalCornerUpRight),
-        //         (WallHashType.WallDiagonalCornerUpLeft, wallDiagonalCornerUpLeft),
-        //         (WallHashType.WallFullEightDirections, wallFull),
-        //         (WallHashType.WallBottomEightDirections, wallBottom)
-        //     };
-        //
-        //     // Find the first element in the array where the value of typeAsByte is contained
-        //     // in the HashSet
-        //     var tileType = tileTypes.FirstOrDefault(t => t.value.Contains(typeAsByte));
-        //
-        //     if (tileType.tile)
-        //         SetSingleTile(wallTilemap, tileType.tile, position);
-        // }
-        
-        
     }
 }

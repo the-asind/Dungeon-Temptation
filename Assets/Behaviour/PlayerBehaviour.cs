@@ -25,7 +25,6 @@ namespace DungeonCreature
             _sr = GetComponent<SpriteRenderer>();
             _attackArea = GetComponent<AttackArea>();
             _room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
-            _behaviourModel.PositionChanged += OnPositionChanged;
             _behaviourModel.Die += OnDie;
         }
 
@@ -80,7 +79,8 @@ namespace DungeonCreature
 
         private void ChangePosition()
         {
-            _behaviourModel.ChangePlayerPosition(_moveDirection.x, _moveDirection.y);
+            transform.Translate(_moveDirection.x, _moveDirection.y, 0);
+            _behaviourModel.ChangePlayerPosition(transform.position.x, transform.position.y);
             timer = 0;
         }
 
@@ -102,7 +102,8 @@ namespace DungeonCreature
         public void TeleportToTileCoordinates(Vector2Int coordinates)
         {
             Vector3 position = CoordinateManipulation.ToWorldCoord(coordinates);
-            _behaviourModel.ChangePlayerPosition(position.x, position.y);
+            transform.position = position;
+            _behaviourModel.TeleportToCoordinates(position.x, position.y);
         }
 
         public void SetLadderPos(Vector2Int floor)

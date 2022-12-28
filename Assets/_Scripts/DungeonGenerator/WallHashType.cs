@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace _Scripts.DungeonGenerator
 {
-    public static class WallHashType
+    public struct WallHashType
     {
         /*
          * This "Magical numbers" is simple enough. It is like translator for engine "that walls you need to put".

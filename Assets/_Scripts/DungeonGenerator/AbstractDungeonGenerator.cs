@@ -12,9 +12,8 @@ namespace _Scripts.DungeonGenerator
 
         private void Awake()
         {
-            
+            player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
             FindObjectOfType<AudioManager>();
-            player = GetComponent<PlayerBehaviour>();
             e = GetComponent<EnemySpawner>();
         }
 
