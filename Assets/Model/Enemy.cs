@@ -6,11 +6,11 @@ namespace DungeonCreature
 {
     public class Enemy : Creature
     {
-        public Player Player;
+        public Player Target;
 
         public Enemy() : base()
         {
-            Player = new Player();
+            Target = new Player();
         }
     }
 }

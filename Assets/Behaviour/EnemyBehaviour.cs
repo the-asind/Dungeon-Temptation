@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using DungeonCreature.BehaviourModel;
+using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace DungeonCreature
 {
     public class EnemyBehaviour : MonoBehaviour
     {
-        private Enemy _enemy = new Enemy();
+        public EnemyBehaviourModel _behaviourModel = new EnemyBehaviourModel();
         public Transform player;
         private RaycastHit2D _collision;
         private BoxCollider2D _collider;
@@ -19,29 +21,51 @@ namespace DungeonCreature
             this._collider = gameObject.AddComponent<BoxCollider2D>();
             this._spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             this._animator = gameObject.AddComponent<Animator>();
+            _behaviourModel.PositionChanged += OnPositionChanged;
+            _behaviourModel.HealthChanged += OnHealthChanged;
+            _behaviourModel.Die += OnDie;
         }
 
+        private void OnDie()
+        {
+            EnemyBehaviour behaviour = gameObject.GetComponent<EnemyBehaviour>();
+            Destroy(behaviour);
+        }
+        private void OnHealthChanged()
+        {
+            
+        }
+        private void OnPositionChanged()
+        {
+            Position position = _behaviourModel.ProvidePosition();
+            transform.Translate(position.x, position.y, 0);
+        } 
         void Update()
         {
-            if (player != null)
+            
+            if (_behaviourModel.CheckTarget() != null)
                 Move();
         }
+        
         public void ChangeSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
         }
+        
         public void ChangeAnimation(RuntimeAnimatorController controller)
         {
             _animator.runtimeAnimatorController = controller;
         }
+        
         public void ChangeCollider(BoxCollider2D collider)
         {
             _collider = collider;
         }
+        
         public void Move()
         {
             timer += Time.deltaTime;
-            if (timer < _enemy.MoveCooldown) return;
+            if (timer < _behaviourModel.ProvideCooldown()) return;
 
             Vector3 direction = player.position - transform.position;
             direction.Normalize();
@@ -55,6 +79,7 @@ namespace DungeonCreature
             if (_collision.collider) return;
             if (direction != Vector3.zero)
             {
+                   
                 transform.Translate(direction.x, direction.y, 0);
                 timer = 0;
             }

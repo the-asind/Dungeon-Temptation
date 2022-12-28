@@ -1,31 +1,44 @@
 ﻿using _Scripts;
 using _Scripts.DungeonGenerator;
+using DungeonCreature.BehaviourModel;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DungeonCreature
 {
     public class PlayerBehaviour : MonoBehaviour
     {
-        private Player _player = new Player();
+        private PlayerBehaviourModel _behaviourModel = new PlayerBehaviourModel();
         private BoxCollider2D _collider;
         private Vector2 _moveDirection;
         private RaycastHit2D _collision;
         public float timer;
-        public float cooldown = 0.05f;
         private SpriteRenderer _sr;
         private Animator _animator;
         private RoomDungeonGenerator _room;
+        private AttackArea _attackArea;
         public Vector3 ladderPos;
-
         private void Start()
         {
             _animator = GetComponent<Animator>();
             _collider = GetComponent<BoxCollider2D>();
             _sr = GetComponent<SpriteRenderer>();
+            _attackArea = GetComponent<AttackArea>();
             _room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
-            _player.MoveCooldown = 0.4f;
+            _behaviourModel.PositionChanged += OnPositionChanged;
+            _behaviourModel.Die += OnDie;
         }
 
+        private void OnDie()
+        {
+            PlayerBehaviour behaviour = gameObject.GetComponent<PlayerBehaviour>();
+            Destroy(behaviour);
+        }
+        private void OnPositionChanged()
+        {
+            Position position = _behaviourModel.ProvidePosition();
+            transform.Translate(position.x, position.y, 0);
+        }
         private void Update()
         {
             _moveDirection.x = Input.GetAxisRaw("Horizontal");
@@ -67,14 +80,14 @@ namespace DungeonCreature
 
         private void ChangePosition()
         {
-            transform.Translate(_moveDirection.x, _moveDirection.y, 0);
+            _behaviourModel.ChangePlayerPosition(_moveDirection.x, _moveDirection.y);
             timer = 0;
         }
 
         public void Move()
         {
             timer += Time.deltaTime;
-            if (timer < _player.MoveCooldown) return;
+            if (timer < _behaviourModel.ProvideCooldown()) return;
 
             Rotate();
             CheckCollision();
@@ -88,7 +101,8 @@ namespace DungeonCreature
 
         public void TeleportToTileCoordinates(Vector2Int coordinates)
         {
-            transform.position = CoordinateManipulation.ToWorldCoord(coordinates);
+            Vector3 position = CoordinateManipulation.ToWorldCoord(coordinates);
+            _behaviourModel.ChangePlayerPosition(position.x, position.y);
         }
 
         public void SetLadderPos(Vector2Int floor)

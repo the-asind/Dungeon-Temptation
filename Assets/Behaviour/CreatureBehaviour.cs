@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace DungeonCreature
 {
-    public class CreatureBehaviour : MonoBehaviour
+    public class CreatureBehaviour : BehaviourModel.BehaviourModel 
     {
         private Creature _creature;
 
@@ -20,6 +20,11 @@ namespace DungeonCreature
         private void Die()
         {
             Destroy(gameObject);
+        }
+
+        public void Dispose()
+        {
+           base.Dispose(); 
         }
     }
 }
