@@ -2,13 +2,13 @@
 
 namespace DungeonCreature.BehaviourModel
 {
-    public class EnemyBehaviourModel : BehaviourModelBase
+    public class EnemyBehaviourModel 
     {
-        public Enemy Enemy = new Enemy();
+        public Enemy Enemy;
 
-        public Player CheckTarget()
+        public bool CheckTarget()
         {
-            return Enemy.Target;
+            return (Enemy.Target == null);
         }
 
         public void TakeDamage(int damage)
@@ -33,6 +33,11 @@ namespace DungeonCreature.BehaviourModel
             return Enemy.Position;
         }
 
+        public EnemyBehaviourModel(float x, float y)
+        {
+            Enemy = new Enemy();
+            ChangePosition(x,y);
+        }
         public event Action Die;
         public event Action HealthChanged;
         public event Action PositionChanged;

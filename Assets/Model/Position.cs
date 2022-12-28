@@ -2,14 +2,14 @@
 {
     public struct Position
     {
-        public float x { get; set; }
-        public float y { get; set; }
-        
-        
-        public void ChangePosition(float _x, float _y)
+        public float X { get; set; }
+        public float Y { get; set; }
+
+        public Position(float x, float y)
         {
-            x = _x;
-            y = _y;
+            X = x;
+            Y = y;
         }
+
     }
 }

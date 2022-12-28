@@ -7,8 +7,7 @@ namespace DungeonCreature
 {
     public class EnemyBehaviour : MonoBehaviour
     {
-        public EnemyBehaviourModel _behaviourModel = new EnemyBehaviourModel();
-        public Transform player;
+        public EnemyBehaviourModel _behaviourModel;
         private RaycastHit2D _collision;
         private BoxCollider2D _collider;
         private SpriteRenderer _spriteRenderer;
@@ -18,8 +17,9 @@ namespace DungeonCreature
 
         public void Awake()
         {
+            _behaviourModel = new EnemyBehaviourModel(transform.position.x, transform.position.y);
             this._collider = gameObject.AddComponent<BoxCollider2D>();
-            this._spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            this._spriteRenderer = GetComponent<SpriteRenderer>();
             this._animator = gameObject.AddComponent<Animator>();
             _behaviourModel.PositionChanged += OnPositionChanged;
             _behaviourModel.HealthChanged += OnHealthChanged;
@@ -28,8 +28,7 @@ namespace DungeonCreature
 
         private void OnDie()
         {
-            EnemyBehaviour behaviour = gameObject.GetComponent<EnemyBehaviour>();
-            Destroy(behaviour);
+            Destroy(this);
         }
         private void OnHealthChanged()
         {
@@ -38,13 +37,11 @@ namespace DungeonCreature
         private void OnPositionChanged()
         {
             Position position = _behaviourModel.ProvidePosition();
-            transform.Translate(position.x, position.y, 0);
+            transform.position = new Vector3(position.X, position.Y, 0);
         } 
         void Update()
         {
-            
-            if (_behaviourModel.CheckTarget() != null)
-                Move();
+            Move();
         }
         
         public void ChangeSprite(Sprite sprite)
@@ -65,9 +62,12 @@ namespace DungeonCreature
         public void Move()
         {
             timer += Time.deltaTime;
-            if (timer < _behaviourModel.ProvideCooldown()) return;
-
-            Vector3 direction = player.position - transform.position;
+            if (timer < _behaviourModel.ProvideCooldown() || _behaviourModel.CheckTarget()) return;
+                        
+            Vector3 targetPosition =
+                new Vector3(_behaviourModel.Enemy.Target.Position.X, _behaviourModel.Enemy.Target.Position.Y, 0);
+            
+            Vector3 direction = targetPosition - transform.position;
             direction.Normalize();
             direction.x = Mathf.Round(direction.x);
             direction.y = Mathf.Round(direction.y);
@@ -79,8 +79,7 @@ namespace DungeonCreature
             if (_collision.collider) return;
             if (direction != Vector3.zero)
             {
-                   
-                transform.Translate(direction.x, direction.y, 0);
+                _behaviourModel.ChangePosition(direction.x + _behaviourModel.ProvidePosition().X, direction.y + _behaviourModel.ProvidePosition().Y);   
                 timer = 0;
             }
         }
