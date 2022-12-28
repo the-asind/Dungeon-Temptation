@@ -32,7 +32,7 @@ namespace _Scripts.DungeonGenerator
             var roomCenters = roomsList.Select(room => (Vector2Int)Vector3Int.RoundToInt(room.center)).ToList();
 
             var corridors = ConnectRooms(roomCenters);
-            ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer, player, e);
+            ObjectGenerator.GenerateCreatures(floor, tilemapVisualizer, player, enemySpawner);
 
             floor.UnionWith(corridors);
 

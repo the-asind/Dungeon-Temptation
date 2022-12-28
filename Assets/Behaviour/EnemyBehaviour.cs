@@ -1,7 +1,5 @@
 ﻿using DungeonCreature.BehaviourModel;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace DungeonCreature
 {
@@ -13,14 +11,14 @@ namespace DungeonCreature
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
         private GameObject _attackArea;
-        public double timer = 0;
+        public double timer;
 
         public void Awake()
         {
             _behaviourModel = new EnemyBehaviourModel(transform.position.x, transform.position.y);
-            this._collider = gameObject.AddComponent<BoxCollider2D>();
-            this._spriteRenderer = GetComponent<SpriteRenderer>();
-            this._animator = gameObject.AddComponent<Animator>();
+            _collider = gameObject.AddComponent<BoxCollider2D>();
+            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            _animator = gameObject.AddComponent<Animator>();
             _behaviourModel.PositionChanged += OnPositionChanged;
             _behaviourModel.HealthChanged += OnHealthChanged;
             _behaviourModel.Die += OnDie;
@@ -30,15 +28,18 @@ namespace DungeonCreature
         {
             Destroy(this);
         }
+        
         private void OnHealthChanged()
         {
             
         }
+        
         private void OnPositionChanged()
         {
             Position position = _behaviourModel.ProvidePosition();
             transform.position = new Vector3(position.X, position.Y, 0);
         } 
+        
         void Update()
         {
             Move();

@@ -41,10 +41,5 @@ namespace DungeonCreature.BehaviourModel
         }
         public event Action Die;
         public event Action PositionChanged;
-
-        public void TeleportToCoordinates(float x, float y)
-        {
-            Player.Move(x,y);
-        }
     }
 }

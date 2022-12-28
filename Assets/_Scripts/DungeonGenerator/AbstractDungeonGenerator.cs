@@ -1,5 +1,6 @@
 using DungeonCreature;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.DungeonGenerator
 {
@@ -7,14 +8,14 @@ namespace _Scripts.DungeonGenerator
     {
         [SerializeField] protected TilemapVisualizer tilemapVisualizer;
         [SerializeField] protected PlayerBehaviour player;
-        [SerializeField] protected EnemySpawner e;
+        [SerializeField] protected EnemySpawner enemySpawner;
         [SerializeField] protected Vector2Int startPosition = Vector2Int.zero;
 
         private void Awake()
         {
             player = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
             FindObjectOfType<AudioManager>();
-            e = GetComponent<EnemySpawner>();
+            enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         }
 
         public void GenerateDungeon()
