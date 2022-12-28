@@ -23,7 +23,7 @@ namespace DungeonCreature
         public Position Position { get; }
         
         public Creature(int _health = 100, int _maxHealth = 100,
-            int _defence = 0, float _moveCooldown = 0.7f,
+            int _defence = 0, float _moveCooldown = 0.5f,
             float _attackCooldown = 0.4f, byte _agility = 1,
             byte _strength = 1, byte _intelligence = 1, byte _level = 1)
 

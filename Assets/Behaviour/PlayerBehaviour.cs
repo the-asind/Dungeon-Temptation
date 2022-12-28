@@ -18,6 +18,7 @@ namespace DungeonCreature
         private RoomDungeonGenerator _room;
         private AttackArea _attackArea;
         public Vector3 ladderPos;
+        
         private void Start()
         {
             _animator = GetComponent<Animator>();
@@ -38,17 +39,24 @@ namespace DungeonCreature
             Position position = _behaviourModel.ProvidePosition();
             transform.Translate(position.x, position.y, 0);
         }
+
+        private float _progress;
         private void Update()
         {
             _moveDirection.x = Input.GetAxisRaw("Horizontal");
             _moveDirection.y = Input.GetAxisRaw("Vertical");
 
             if (transform.position == ladderPos) _room.GenerateDungeon();
+            //TODO:
+            _progress =  _behaviourModel.ProvideCooldown() / Time.deltaTime;
+            transform.position = Vector2.MoveTowards(transform.position, toPosition, _progress);
         }
-
+        
+        public Vector2 toPosition;
         private void FixedUpdate()
         {
             Move();
+            
         }
 
         private void Rotate()
@@ -79,13 +87,17 @@ namespace DungeonCreature
 
         private void ChangePosition()
         {
-            transform.Translate(_moveDirection.x, _moveDirection.y, 0);
+            if (_moveDirection.x != 0)
+                toPosition = new Vector2(transform.position.x + _moveDirection.x, transform.position.y);
+            else toPosition = new Vector2(transform.position.x, transform.position.y + _moveDirection.y);
+            //transform.Translate(_moveDirection.x, _moveDirection.y, 0);
             _behaviourModel.ChangePlayerPosition(transform.position.x, transform.position.y);
             timer = 0;
         }
 
         public void Move()
         {
+            
             timer += Time.deltaTime;
             if (timer < _behaviourModel.ProvideCooldown()) return;
 
@@ -94,6 +106,7 @@ namespace DungeonCreature
 
             if (_moveDirection != Vector2.zero && !_collision.collider)
             {
+                
                 ChangePosition();
                 _animator.SetTrigger("IsMoving");
             }
@@ -102,6 +115,7 @@ namespace DungeonCreature
         public void TeleportToTileCoordinates(Vector2Int coordinates)
         {
             Vector3 position = CoordinateManipulation.ToWorldCoord(coordinates);
+            toPosition = position;
             transform.position = position;
             _behaviourModel.TeleportToCoordinates(position.x, position.y);
         }
