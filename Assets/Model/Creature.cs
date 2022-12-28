@@ -20,10 +20,10 @@ namespace DungeonCreature
         public Weapon Weapon { get; set; }
         public Inventory Inventory { get; private set; }
         public int Xp { get; set; }
-        public Position Position { get; }
+        public Position Position { get; set; }
         
         public Creature(int _health = 100, int _maxHealth = 100,
-            int _defence = 0, float _moveCooldown = 0.5f,
+            int _defence = 0, float _moveCooldown = 0.25f,
             float _attackCooldown = 0.4f, byte _agility = 1,
             byte _strength = 1, byte _intelligence = 1, byte _level = 1)
 
@@ -68,7 +68,7 @@ namespace DungeonCreature
 
         public void Move(float x, float y)
         {
-            Position.ChangePosition(x,y);
+            Position = new Position(x, y);
         }
 
         public void Attack(ICreatureTakeDamage _creature)

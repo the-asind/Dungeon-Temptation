@@ -1,7 +1,6 @@
 ﻿using _Scripts;
 using _Scripts.DungeonGenerator;
 using DungeonCreature.BehaviourModel;
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace DungeonCreature
 {
     public class PlayerBehaviour : MonoBehaviour
     {
-        private PlayerBehaviourModel _behaviourModel = new PlayerBehaviourModel();
+        public PlayerBehaviourModel _behaviourModel;
         private BoxCollider2D _collider;
         private Vector2 _moveDirection;
         private RaycastHit2D _collision;
@@ -22,6 +21,7 @@ namespace DungeonCreature
         
         private void Start()
         {
+            _behaviourModel = new PlayerBehaviourModel(transform.position.x, transform.position.y);
             _animator = GetComponent<Animator>();
             _collider = GetComponent<BoxCollider2D>();
             _sr = GetComponent<SpriteRenderer>();
@@ -32,13 +32,12 @@ namespace DungeonCreature
 
         private void OnDie()
         {
-            PlayerBehaviour behaviour = gameObject.GetComponent<PlayerBehaviour>();
-            Destroy(behaviour);
+            Destroy(this);
         }
         private void OnPositionChanged()
         {
             Position position = _behaviourModel.ProvidePosition();
-            transform.Translate(position.x, position.y, 0);
+            transform.Translate(position.X, position.Y, 0);
         }
 
         private float _progress;
@@ -48,9 +47,7 @@ namespace DungeonCreature
             _moveDirection.y = Input.GetAxisRaw("Vertical");
 
             if (transform.position == ladderPos) _room.GenerateDungeon();
-            //TODO:
-            _progress =  Time.deltaTime / _behaviourModel.ProvideCooldown() * 1.05f;
-            Debug.Log(_progress);
+            _progress = Time.deltaTime * 1.03f / _behaviourModel.ProvideCooldown();
             transform.position = Vector2.MoveTowards(transform.position, toPosition, _progress);
         }
         
