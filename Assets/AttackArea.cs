@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class AttackArea : MonoBehaviour
 {
+    private uint _damage = 3;
+
     public void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.GetComponent<EnemyBehaviour>() != null)

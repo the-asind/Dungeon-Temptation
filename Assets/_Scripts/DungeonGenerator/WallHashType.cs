@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace _Scripts.DungeonGenerator
 {
-    public static class WallHashType
+    public struct WallHashType
     {
         /*
          * This "Magical numbers" is simple enough. It is like translator for engine "that walls you need to put".
@@ -170,6 +170,14 @@ namespace _Scripts.DungeonGenerator
         public static readonly HashSet<byte> WallBottomEightDirections = new()
         {
             0b01000001
+        };
+        
+        public static readonly HashSet<byte> WallOnlyTop = new()
+        {
+            0b011111111,
+            0b01111100,
+            0b00011100,
+            0b00111110
         };
         //offtop: в unity есть свой генератор стен, который работает, вероятно, даже лучше этого.
         //Но пусть используется этот, как показатель программистской части проекта.

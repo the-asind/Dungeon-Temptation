@@ -782,7 +782,7 @@ GameObject:
   m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -811,12 +811,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 263246351}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c21f74131e86a9e42ace2eeff16d82aa, type: 3}
+  m_Script: {fileID: 11500000, guid: 38a274ab36f14f7e84e6f9bbaa55f810, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 1
   timer: 0
-  cooldown: 0.2
   ladderPos: {x: 15.5, y: 9.5, z: 0}
 --- !u!61 &263246355
 BoxCollider2D:

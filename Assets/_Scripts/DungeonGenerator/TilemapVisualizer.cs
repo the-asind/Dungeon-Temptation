@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 using Debug = UnityEngine.Debug;
+using Random = UnityEngine.Random;
 
 namespace _Scripts.DungeonGenerator
 {
@@ -13,7 +16,13 @@ namespace _Scripts.DungeonGenerator
         [SerializeField] private Tilemap floorTilemap, wallTilemap, objectTilemap;
 
         [SerializeField] private TileBase
+            // Floors
             floorTile,
+            floor1,
+            floor2,
+            floor3,
+            floor4, 
+            // Walls
             wallTop,
             wallCenter,
             wallSideRight,
@@ -28,12 +37,40 @@ namespace _Scripts.DungeonGenerator
             wallDiagonalCornerUpLeft;
 
         [SerializeField] private TileBase
-            chestTile,
-            ladderTile;
+            chestTile;
+
+        [SerializeField] private TileBase
+            ladderTile,
+            hatchTile,
+            // Decorative Floor Tiles
+            dftSkull,
+            dftRocks,
+            // Decorative Wall Tiles
+            dwtBanner,
+            dwtTorch;
+
 
         public void SetFloorTiles(HashSet<Vector2Int> floorPositions)
         {
-            SetTiles(floorPositions, floorTilemap, floorTile);
+            foreach (var position in floorPositions)
+            {
+                switch (Random.Range(1, 5))
+                {
+                    case 1:
+                        SetSingleTile(floorTilemap, floor1, position);
+                        break;
+                    case 2:
+                        SetSingleTile(floorTilemap, floor2, position);
+                        break;
+                    case 3:
+                        SetSingleTile(floorTilemap, floor3, position);
+                        break;
+                    case 4:
+                        SetSingleTile(floorTilemap, floor4, position);
+                        break;
+                }
+            }
+                
         }
 
         public void SetChestTiles(HashSet<Vector2Int> chestPositions)
@@ -44,6 +81,28 @@ namespace _Scripts.DungeonGenerator
         public void SetLadderTiles(HashSet<Vector2Int> ladderPositions)
         {
             SetTiles(ladderPositions, objectTilemap, ladderTile);
+        }
+
+        public void SetHatchTiles(Vector2Int hatchPosition)
+        {
+            SetSingleTile(objectTilemap, hatchTile, hatchPosition);
+        }
+        
+        public void SetDecorativeFloorTiles(HashSet<Vector2Int> decorativeFloorTilesPositions)
+        {
+            foreach (var position in decorativeFloorTilesPositions)
+            {
+                if (Random.value > 0.5)
+                    SetSingleTile(objectTilemap, dftRocks, position);
+                else SetSingleTile(objectTilemap, dftSkull, position);
+            }
+        }
+        
+        public void SetDecorativeWallTile(Vector2Int decorativeFloorTilesPosition)
+        {
+            if (Random.value > 0.5)
+                SetSingleTile(objectTilemap, dwtBanner, decorativeFloorTilesPosition);
+            else SetSingleTile(objectTilemap, dwtTorch, decorativeFloorTilesPosition);
         }
 
         private void SetTiles(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
@@ -65,7 +124,8 @@ namespace _Scripts.DungeonGenerator
                 tile = wallSideLeft;
             else if (WallHashType.WallBottom.Contains(typeAsByte))
                 tile = wallBottom;
-            else if (WallHashType.WallFull.Contains(typeAsByte)) tile = wallFull;
+            else if (WallHashType.WallFull.Contains(typeAsByte)) 
+                tile = wallFull;
 
             if (tile)
                 SetSingleTile(wallTilemap, tile, position);
@@ -103,38 +163,19 @@ namespace _Scripts.DungeonGenerator
                 tile = wallDiagonalCornerUpLeft;
             else if (WallHashType.WallFullEightDirections.Contains(typeAsByte))
                 tile = wallFull;
-            else if (WallHashType.WallBottomEightDirections.Contains(typeAsByte)) tile = wallBottom;
+            else if (WallHashType.WallBottomEightDirections.Contains(typeAsByte)) 
+                tile = wallBottom;
+            else if (WallHashType.WallOnlyTop.Contains(typeAsByte))
+            {
+                tile = wallTop;
+                SetSingleTile(wallTilemap, tile, position);
+                if (Random.value > 0.8)
+                    SetDecorativeWallTile(position);
+                return;
+            }
             
             if (tile)
                 SetSingleTile(wallTilemap, tile, position);
         }
-
-        // internal void SetSingleCornerWall(Vector2Int position, string binaryType)
-        // {
-        //     var typeAsByte = Convert.ToByte(binaryType, 2);
-        //     TileBase tile = null;
-        //
-        //     // Create an array of tuples that contains the possible values of typeAsByte
-        //     // and the corresponding tile
-        //     var tileTypes = new (HashSet<byte> value, TileBase tile)[] {
-        //         (WallHashType.WallInnerCornerDownLeft, wallInnerCornerDownLeft),
-        //         (WallHashType.WallInnerCornerDownRight, wallInnerCornerDownRight),
-        //         (WallHashType.WallDiagonalCornerDownLeft, wallDiagonalCornerDownLeft),
-        //         (WallHashType.WallDiagonalCornerDownRight, wallDiagonalCornerDownRight),
-        //         (WallHashType.WallDiagonalCornerUpRight, wallDiagonalCornerUpRight),
-        //         (WallHashType.WallDiagonalCornerUpLeft, wallDiagonalCornerUpLeft),
-        //         (WallHashType.WallFullEightDirections, wallFull),
-        //         (WallHashType.WallBottomEightDirections, wallBottom)
-        //     };
-        //
-        //     // Find the first element in the array where the value of typeAsByte is contained
-        //     // in the HashSet
-        //     var tileType = tileTypes.FirstOrDefault(t => t.value.Contains(typeAsByte));
-        //
-        //     if (tileType.tile)
-        //         SetSingleTile(wallTilemap, tileType.tile, position);
-        // }
-        
-        
     }
 }
