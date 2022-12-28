@@ -1,4 +1,5 @@
-﻿using _Scripts;
+﻿using System;
+using _Scripts;
 using _Scripts.DungeonGenerator;
 using DungeonCreature.BehaviourModel;
 using Unity.VisualScripting;
@@ -34,10 +35,12 @@ namespace DungeonCreature
 
         private void OnHealthChanged()
         {
+            _animator.SetTrigger("IsTakeHit");
             GameObject.Find("HealthProgressBar").GetComponent<HealthProgressBar>().SetValue((float)_behaviourModel.ProvideHealth() / (float)_behaviourModel.ProvideMaxHealth());
         }
         private void OnDie()
         {
+            Application.Quit();
             Destroy(gameObject);
         }
         private void OnPositionChanged()

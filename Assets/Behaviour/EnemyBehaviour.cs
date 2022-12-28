@@ -68,20 +68,30 @@ namespace DungeonCreature
         {
             
         }
+
+        private Position position;
         private void OnPositionChanged()
         {
-            Position position = _behaviourModel.ProvidePosition();
-            transform.position = new Vector3(position.X, position.Y, 0);
-        } 
-        void Update()
+            position = _behaviourModel.ProvidePosition();
+            //transform.position = new Vector3(position.X, position.Y, 0);
+        }
+        
+        private float _progress;
+        
+        private void Update()
         {
             Move();
+            _progress = Time.deltaTime * 1.04f / _behaviourModel.ProvideCooldown();
+            
+            transform.position = Vector2.MoveTowards(transform.position, new Vector2(position.X, position.Y), _progress);
         }
         
         public void ChangeSprite(Sprite sprite)
         {
             _spriteRenderer.sprite = sprite;
         }
+        
+        
         
         public void ChangeAnimation(RuntimeAnimatorController controller)
         {
@@ -122,7 +132,7 @@ namespace DungeonCreature
         {
             _collision = Physics2D.BoxCast(transform.position, _collider.size, 0, new Vector2(direction.x, direction.y),
                 Mathf.Abs(direction.x) + Mathf.Abs(direction.y),
-                LayerMask.GetMask("Actor", "Blocking"));
+                LayerMask.GetMask( "Blocking"));
         }
 
         private void Rotate(Vector3 direction)
