@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Numerics;
 using DungeonCreature.Interfaces;
-using UnityEngine;
+using Vector2 = UnityEngine.Vector2;
 using Vector3 = System.Numerics.Vector3;
 
 namespace DungeonCreature
@@ -19,8 +20,8 @@ namespace DungeonCreature
         public Weapon Weapon { get; set; }
         public Inventory Inventory { get; private set; }
         public int Xp { get; set; }
-        public Vector2 Position { get; private set; }
-
+        public Position Position { get; }
+        
         public Creature(int _health = 100, int _maxHealth = 100,
             int _defence = 0, float _moveCooldown = 0.7f,
             float _attackCooldown = 0.4f, byte _agility = 1,
@@ -49,9 +50,9 @@ namespace DungeonCreature
             Health -= damage - Defence;
         }
 
-        public void Move(Vector2 position)
+        public void Move(float x, float y)
         {
-            Position = position;
+            Position.ChangePosition(x,y);
         }
 
         public void Attack(ICreatureTakeDamage _creature)
@@ -70,6 +71,7 @@ namespace DungeonCreature
             }
         }
 
+        ~Creature() { } 
         public void Heal(int heal)
         {
             Health = Health + heal > MAX_HEALTH ? MAX_HEALTH : Health + heal;

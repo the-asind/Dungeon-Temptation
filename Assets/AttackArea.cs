@@ -5,15 +5,19 @@ using UnityEngine;
 
 public class AttackArea : MonoBehaviour
 {
-    private uint _damage = 3;
-
     public void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.GetComponent<Enemy>() != null)
+        if (collider.GetComponent<EnemyBehaviour>() != null)
         {
-            Enemy enemy = collider.transform.parent.GetComponent<Enemy>();
-            enemy.TakeDamage(_damage);
-        } 
+            PlayerBehaviour playerBehaviour = 
+                gameObject.GetComponent<PlayerBehaviour>();
+            EnemyBehaviour behaviour = collider.GetComponent<EnemyBehaviour>();
+             
+        }
+
+        if (collider.GetComponent<PlayerBehaviour>() != null)
+        {
+            
+        }
     }
-    
 }
