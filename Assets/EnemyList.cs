@@ -27,4 +27,13 @@ public class EnemyList : MonoBehaviour
         // Add the Enemy GameObject to the enemies list.
         enemies.Add(enemy);
     }
+
+    public void Clear()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
+        enemies.Clear();
+    }
 }

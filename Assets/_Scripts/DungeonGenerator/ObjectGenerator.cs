@@ -57,9 +57,10 @@ namespace _Scripts.DungeonGenerator
             tilemapVisualizer.SetChestTiles(chestPositions);
             tilemapVisualizer.SetLadderTiles(ladderPosition);
 
+            e.ClearEnemyList();
             foreach (var enemyPosition in enemyPositions)
             {
-                //не работает код ниже:
+                
                 e.SpawnEnemy(CoordinateManipulation.ToWorldCoord(enemyPosition));
             }
         }

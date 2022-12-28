@@ -48,7 +48,7 @@ namespace DungeonCreature
             _moveDirection.y = Input.GetAxisRaw("Vertical");
 
             if (transform.position == ladderPos) _room.GenerateDungeon();
-            _progress = Time.deltaTime * 1.03f / _behaviourModel.ProvideCooldown();
+            _progress = Time.deltaTime * 1.04f / _behaviourModel.ProvideCooldown();
             transform.position = Vector2.MoveTowards(transform.position, toPosition, _progress);
         }
         
