@@ -17,11 +17,12 @@ public class EnemyList : MonoBehaviour
         EnemyBehaviour enemy = enemyObject.AddComponent<EnemyBehaviour>();
 
         enemy.transform.position = coordinates;
+        enemy._behaviourModel.ChangePosition(coordinates.x, coordinates.y);
         enemy.ChangeSprite(sprite);
         //enemy.ChangeAnimation(Animations[index]);
 
         // Add the Enemy GameObject as a child of the Enemy List GameObject.
-        enemyObject.transform.SetParent(transform);
+        enemyObject.transform.parent = transform;
 
         // Add the Enemy GameObject to the enemies list.
         enemies.Add(enemy);

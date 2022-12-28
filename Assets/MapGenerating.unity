@@ -678,7 +678,7 @@ GameObject:
   - component: {fileID: 263246357}
   - component: {fileID: 263246361}
   m_Layer: 7
-  m_Name: player_elf_man
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -849,7 +849,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timer: 0
-  cooldown: 0.05
   ladderPos: {x: 0, y: 0, z: 0}
 --- !u!1 &293089122
 GameObject:
@@ -19187,7 +19186,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c00d4fb1d0d484ba843b7e5b20734d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
   timer: 0
 --- !u!1 &1597675084
 GameObject:

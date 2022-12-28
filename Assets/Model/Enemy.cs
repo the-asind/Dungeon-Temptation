@@ -10,7 +10,7 @@ namespace DungeonCreature
 
         public Enemy() : base()
         {
-            Target = new Player();
+            Target = null;
         }
     }
 }

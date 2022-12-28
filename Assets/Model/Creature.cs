@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Net;
 using System.Numerics;
 using DungeonCreature.Interfaces;
 using Vector2 = UnityEngine.Vector2;
@@ -28,6 +29,7 @@ namespace DungeonCreature
             byte _strength = 1, byte _intelligence = 1, byte _level = 1)
 
         {
+            Weapon = new MeleeWeapon(100, 1, WeaponType.Melee);
             if (_defence < 0)
                 throw new ArgumentException("Wrong defence value!");
             Defence = _defence;
@@ -64,6 +66,8 @@ namespace DungeonCreature
         public void TakeDamage(int damage)
         {
             Health -= damage - Defence;
+            if (Health <= 0)
+                Die?.Invoke();
         }
 
         public void Move(float x, float y)
@@ -92,5 +96,7 @@ namespace DungeonCreature
         {
             Health = Health + heal > MAX_HEALTH ? MAX_HEALTH : Health + heal;
         }
+
+        public event Action Die;
     }
 }

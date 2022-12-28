@@ -20,6 +20,11 @@ namespace DungeonCreature.BehaviourModel
                 Die?.Invoke();
         }
 
+        public void Attack(Enemy target)
+        {
+            Player.Attack(target);
+        }
+
         public void TeleportToCoordinates(float x, float y)
         {
             Player.Move(x,y);
@@ -29,6 +34,7 @@ namespace DungeonCreature.BehaviourModel
         {
             return Player.Position;
         }
+
         public float ProvideCooldown()
         {
             return Player.MoveCooldown;
@@ -39,6 +45,7 @@ namespace DungeonCreature.BehaviourModel
             Player = new Player();
             Player.Move(x,y);
         }
+
         public event Action Die;
         public event Action PositionChanged;
     }

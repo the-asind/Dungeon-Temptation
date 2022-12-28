@@ -11,11 +11,18 @@ namespace DungeonCreature.BehaviourModel
             return (Enemy.Target == null);
         }
 
+        public void Attack(Player target)
+        {
+            Enemy.Attack(target);
+        }
+
+        public void OnDie()
+        {
+            Die?.Invoke();
+        }
         public void TakeDamage(int damage)
         {
             Enemy.TakeDamage(damage);
-            if (Enemy.Health <= 0)
-                Die?.Invoke();
             HealthChanged?.Invoke(); 
         }
         public void ChangePosition(float x, float y)
@@ -36,8 +43,10 @@ namespace DungeonCreature.BehaviourModel
         public EnemyBehaviourModel(float x, float y)
         {
             Enemy = new Enemy();
+            Enemy.Die += OnDie;
             ChangePosition(x,y);
         }
+
         public event Action Die;
         public event Action HealthChanged;
         public event Action PositionChanged;

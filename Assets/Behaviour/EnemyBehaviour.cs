@@ -1,5 +1,7 @@
 ﻿using DungeonCreature.BehaviourModel;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DungeonCreature
 {
@@ -10,36 +12,55 @@ namespace DungeonCreature
         private BoxCollider2D _collider;
         private SpriteRenderer _spriteRenderer;
         private Animator _animator;
-        private GameObject _attackArea;
+        private Rigidbody2D _rb;
+        private GameObject _aggroArea;
         public double timer;
 
         public void Awake()
         {
             _behaviourModel = new EnemyBehaviourModel(transform.position.x, transform.position.y);
-            _collider = gameObject.AddComponent<BoxCollider2D>();
-            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
-            _animator = gameObject.AddComponent<Animator>();
+            AddComponents(); 
+            AddAttackArea();
             _behaviourModel.PositionChanged += OnPositionChanged;
             _behaviourModel.HealthChanged += OnHealthChanged;
             _behaviourModel.Die += OnDie;
         }
 
-        private void OnDie()
+        private void AddComponents()
         {
-            Destroy(this);
+            this.gameObject.layer = LayerMask.NameToLayer("Actor");
+            _collider = gameObject.AddComponent<BoxCollider2D>();
+            _collider.size = new Vector2(0.5f, 0.5f);
+            _spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
+            _animator = gameObject.AddComponent<Animator>();
+            _rb = gameObject.AddComponent<Rigidbody2D>();
+            _rb.bodyType = RigidbodyType2D.Kinematic;
         }
         
+        private void AddAttackArea()
+        {
+            _aggroArea = new GameObject();
+            _aggroArea.transform.parent = transform;
+            _aggroArea.gameObject.AddComponent<AggroArea>();
+            
+            CircleCollider2D aggroAreaCollider = _aggroArea.AddComponent<CircleCollider2D>();
+            aggroAreaCollider.isTrigger = true;
+            aggroAreaCollider.radius = 5;
+        }
+        
+        private void OnDie()
+        {
+            Destroy(gameObject);
+        }
         private void OnHealthChanged()
         {
             
         }
-        
         private void OnPositionChanged()
         {
             Position position = _behaviourModel.ProvidePosition();
             transform.position = new Vector3(position.X, position.Y, 0);
         } 
-        
         void Update()
         {
             Move();
@@ -94,7 +115,7 @@ namespace DungeonCreature
 
         private void Rotate(Vector3 direction)
         {
-            _spriteRenderer.flipX = (direction.x > 0) ? false : true;
+          _spriteRenderer.flipX = (direction.x > 0) ? false : true;
         }
     }
 }

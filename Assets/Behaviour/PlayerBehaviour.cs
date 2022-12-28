@@ -22,6 +22,7 @@ namespace DungeonCreature
         private void Start()
         {
             _behaviourModel = new PlayerBehaviourModel(transform.position.x, transform.position.y);
+            toPosition = new Vector2(_behaviourModel.ProvidePosition().X, _behaviourModel.ProvidePosition().Y);
             _animator = GetComponent<Animator>();
             _collider = GetComponent<BoxCollider2D>();
             _sr = GetComponent<SpriteRenderer>();
