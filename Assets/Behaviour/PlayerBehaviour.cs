@@ -1,6 +1,7 @@
 ﻿using _Scripts;
 using _Scripts.DungeonGenerator;
 using DungeonCreature.BehaviourModel;
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -48,7 +49,8 @@ namespace DungeonCreature
 
             if (transform.position == ladderPos) _room.GenerateDungeon();
             //TODO:
-            _progress =  _behaviourModel.ProvideCooldown() / Time.deltaTime;
+            _progress =  Time.deltaTime / _behaviourModel.ProvideCooldown() * 1.05f;
+            Debug.Log(_progress);
             transform.position = Vector2.MoveTowards(transform.position, toPosition, _progress);
         }
         
