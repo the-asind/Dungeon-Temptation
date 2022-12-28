@@ -16,8 +16,6 @@ namespace DungeonCreature
 
         public void Awake()
         {
-            //this.Health = GetComponent<Health>();
-            //_attackArea = transform.GetChild(0).gameObject;
             this._collider = gameObject.AddComponent<BoxCollider2D>();
             this._spriteRenderer = gameObject.AddComponent<SpriteRenderer>();
             this._animator = gameObject.AddComponent<Animator>();
