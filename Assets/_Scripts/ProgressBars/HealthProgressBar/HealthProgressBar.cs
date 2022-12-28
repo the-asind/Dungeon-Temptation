@@ -7,7 +7,7 @@ public class HealthProgressBar : MonoBehaviour
 {
     [SerializeField] private Image imgFiller;
 
-    private void SetValue(float valueNormalized)
+    public void SetValue(float valueNormalized)
     {
         this.imgFiller.fillAmount = valueNormalized;
     }

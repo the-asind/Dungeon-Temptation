@@ -24,12 +24,12 @@ namespace DungeonCreature
         public Position Position { get; set; }
         
         public Creature(int _health = 100, int _maxHealth = 100,
-            int _defence = 0, float _moveCooldown = 0.25f,
-            float _attackCooldown = 0.4f, byte _agility = 1,
+            int _defence = 1, float _moveCooldown = 0.25f,
+            float _attackCooldown = 0.7f, byte _agility = 1,
             byte _strength = 1, byte _intelligence = 1, byte _level = 1)
 
         {
-            Weapon = new MeleeWeapon(100, 1, WeaponType.Melee);
+            Weapon = new MeleeWeapon(50, 1, WeaponType.Melee);
             if (_defence < 0)
                 throw new ArgumentException("Wrong defence value!");
             Defence = _defence;
@@ -65,9 +65,10 @@ namespace DungeonCreature
 
         public void TakeDamage(int damage)
         {
-            Health -= damage - Defence;
+            Health -= damage / Defence;
             if (Health <= 0)
                 Die?.Invoke();
+            HealthChanged?.Invoke();            
         }
 
         public void Move(float x, float y)
@@ -97,6 +98,7 @@ namespace DungeonCreature
             Health = Health + heal > MAX_HEALTH ? MAX_HEALTH : Health + heal;
         }
 
+        public event Action HealthChanged;
         public event Action Die;
     }
 }

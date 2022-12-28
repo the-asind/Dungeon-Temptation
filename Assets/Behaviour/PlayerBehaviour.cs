@@ -16,7 +16,7 @@ namespace DungeonCreature
         private SpriteRenderer _sr;
         private Animator _animator;
         private RoomDungeonGenerator _room;
-        private AttackArea _attackArea;
+        private GameObject _attackArea;
         public Vector3 ladderPos;
         
         private void Start()
@@ -26,14 +26,19 @@ namespace DungeonCreature
             _animator = GetComponent<Animator>();
             _collider = GetComponent<BoxCollider2D>();
             _sr = GetComponent<SpriteRenderer>();
-            _attackArea = GetComponent<AttackArea>();
+            _attackArea = gameObject.transform.GetChild(0).gameObject;
             _room = GameObject.Find("RoomDungeonGenerator").GetComponent<RoomDungeonGenerator>();
             _behaviourModel.Die += OnDie;
+            _behaviourModel.HealthChanged += OnHealthChanged;
         }
 
+        private void OnHealthChanged()
+        {
+            GameObject.Find("HealthProgressBar").GetComponent<HealthProgressBar>().SetValue((float)_behaviourModel.ProvideHealth() / (float)_behaviourModel.ProvideMaxHealth());
+        }
         private void OnDie()
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
         private void OnPositionChanged()
         {
@@ -61,21 +66,20 @@ namespace DungeonCreature
 
         private void Rotate()
         {
-            var attackArea = transform.GetChild(0).gameObject;
             if (_moveDirection.x > 0)
             {
                 _sr.flipX = false;
-                attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
+                _attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, -0.70711f);
             }
             else if (_moveDirection.x < 0)
             {
                 _sr.flipX = true;
-                attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
+                _attackArea.transform.rotation = new Quaternion(0f, 0f, 0.70711f, 0.70711f);
             }
             else if (_moveDirection.y > 0)
-                attackArea.transform.rotation = new Quaternion(0f, 0f, 0f, 1f);
+                _attackArea.transform.rotation = new Quaternion(0f, 0f, 0f, 1f);
             else if (_moveDirection.y < 0)
-                attackArea.transform.rotation = new Quaternion(0f, 0f, 1, 0f);
+                _attackArea.transform.rotation = new Quaternion(0f, 0f, 1, 0f);
         }
 
         private void CheckCollision()

@@ -2,13 +2,18 @@
 
 namespace DungeonCreature.BehaviourModel
 {
-    public class EnemyBehaviourModel 
+    public class EnemyBehaviourModel
     {
         public Enemy Enemy;
 
         public bool CheckTarget()
         {
             return (Enemy.Target == null);
+        }
+
+        public float ProvideAttackCooldown()
+        {
+            return Enemy.AttackCooldown;
         }
 
         public void Attack(Player target)
@@ -20,16 +25,19 @@ namespace DungeonCreature.BehaviourModel
         {
             Die?.Invoke();
         }
+
         public void TakeDamage(int damage)
         {
             Enemy.TakeDamage(damage);
-            HealthChanged?.Invoke(); 
+            HealthChanged?.Invoke();
         }
+
         public void ChangePosition(float x, float y)
         {
-            Enemy.Move(x,y);
-            PositionChanged?.Invoke(); 
+            Enemy.Move(x, y);
+            PositionChanged?.Invoke();
         }
+
         public float ProvideCooldown()
         {
             return Enemy.MoveCooldown;
@@ -44,7 +52,7 @@ namespace DungeonCreature.BehaviourModel
         {
             Enemy = new Enemy();
             Enemy.Die += OnDie;
-            ChangePosition(x,y);
+            ChangePosition(x, y);
         }
 
         public event Action Die;

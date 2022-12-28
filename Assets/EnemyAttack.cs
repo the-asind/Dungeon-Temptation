@@ -1,32 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
+using DungeonCreature;
 using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    private GameObject attackArea = default;
+    private GameObject attackArea;
 
     private bool attacking = false;
 
+    private float _attackCooldown => gameObject.GetComponent<EnemyBehaviour>()._behaviourModel.ProvideAttackCooldown();
     private float timeToAttack = 0.25f;
 
-    private float timer = 0f;
+    private float timeToAttackTimer = 0f;
+    private float AttackCooldownTimer = 0f;
+    
     void Start()
     {
-        attackArea = transform.GetChild(0).gameObject;
+        attackArea = gameObject.transform.GetChild(1).gameObject;
     }
 
     void Update()
     {
-        Attack();
+        if (!(AttackCooldownTimer > _attackCooldown))
+        {
+            AttackCooldownTimer += Time.deltaTime;
+            return;
+        }
 
+        Attack();
+        
         if (attacking)
         {
-            timer += Time.deltaTime;
+            timeToAttackTimer += Time.deltaTime;
 
-            if (timer >= timeToAttack)
+            if (timeToAttackTimer >= timeToAttack)
             {
-                timer = 0;
+                timeToAttackTimer = 0;
+                AttackCooldownTimer = 0;
                 attacking = false;
                 attackArea.SetActive(attacking);
             }
