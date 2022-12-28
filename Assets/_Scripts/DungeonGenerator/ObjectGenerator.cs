@@ -13,6 +13,7 @@ namespace _Scripts.DungeonGenerator
         {
             var chestPositions = new HashSet<Vector2Int>();
             var enemyPositions = new HashSet<Vector2Int>();
+            var decorativePositions = new HashSet<Vector2Int>();
             var ladderPosition = new HashSet<Vector2Int>();
             var take = floorPositions.Count / 20;
             take = take % 2 == 0 ? take : take + 1;
@@ -22,16 +23,22 @@ namespace _Scripts.DungeonGenerator
                          .OrderBy(_ => r.Next())
                          .Take(take))
             {
-                while (chestPositions.Count < take / 2 - 1)
+                if (chestPositions.Count < take / 4 - 1)
                 {
                     chestPositions.Add(floor);
-                    break;
+                    continue;
                 }
 
-                while (enemyPositions.Count < take / 2 - 1)
+                if (enemyPositions.Count < take / 4 - 1)
                 {
                     enemyPositions.Add(floor);
-                    break;
+                    continue;
+                }
+                
+                if (decorativePositions.Count < take / 2)
+                {
+                    decorativePositions.Add(floor);
+                    continue;
                 }
 
                 if (ladderPosition.Count == 0) // more ladders in future could be.
@@ -42,8 +49,11 @@ namespace _Scripts.DungeonGenerator
                 }
 
                 player.TeleportToTileCoordinates(floor);
+                tilemapVisualizer.SetHatchTiles(floor);
+                break;
             }
 
+            tilemapVisualizer.SetDecorativeFloorTiles(decorativePositions);
             tilemapVisualizer.SetChestTiles(chestPositions);
             tilemapVisualizer.SetLadderTiles(ladderPosition);
 
